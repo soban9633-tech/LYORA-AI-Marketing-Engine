@@ -731,7 +731,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Roman Urdu',
     getScenes: (b) => [
       `Jab aam standards kafi nahi hotay, tab humne perfection ka naya standard set kiya.`,
+      `Market me har taraf mediocre products hain jo kuch hi dino me apni chamak kho dete hain.`,
+      `Isi liye ${b.brandName} ne har aik detail ko scratch se dobara engineer kiya.`,
       `Khaas un logon ke liye jo relentless quality, modern style aur ${b.uniqueSellingProp || 'zabardast comfort'} demand karte hain.`,
+      `Har stitching, har curve aur har material ko bar-ha test kiya gaya hai.`,
+      `Hazaaron smart customers already is revolution ka hissa ban chuke hain.`,
       `${b.brandName} — Apne lifestyle ko upgrade karein. Bio me diye gaye link se abhi order karein!`
     ]
   },
@@ -740,7 +744,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Urdu',
     getScenes: (b) => [
       `جب عام معیار کافی نہ رہے، تب ہم نے ایک نیا معیار تخلیق کیا۔`,
-      `خاص ان لوگوں کے لیے تیار کردہ جو بے مثال کوالٹی اور ${b.uniqueSellingProp || 'شاندار معیار'} کے طلب گار ہیں۔`,
+      `مارکیٹ میں عام اور روایتی چیزوں نے ہر کسی کو مایوس کر رکھا تھا۔`,
+      `اسی لیے ${b.brandName} نے ہر تفصیل کو نئے سرے سے ڈیزائن کیا۔`,
+      `خاص ان لوگوں کے لیے جو بے مثال کوالٹی اور ${b.uniqueSellingProp || 'شاندار معیار'} کے طلب گار ہیں۔`,
+      `ہر میٹریل کمالِ مہارت اور پائیداری کا جیتا جاگتا ثبوت ہے۔`,
+      `ہزاروں مطمئن صارفین اس شاندار تجربے کا حصہ بن چکے ہیں۔`,
       `${b.brandName} — اپنے انداز کو ایک نئی پہچان دیں۔ ابھی بائیو میں دیے گئے لنک سے آرڈر کریں۔`
     ]
   },
@@ -749,7 +757,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Hindi',
     getScenes: (b) => [
       `जब साधारण चीज़ें काफी नहीं होतीं, तब हमने एक नया स्टैंडर्ड बनाया।`,
-      `खास उनके लिए तैयार किया गया जो बेहतरीन क्वालिटी और ${b.uniqueSellingProp || 'अनोखे कम्फर्ट'} की तलाश में हैं।`,
+      `मार्केट के पुराने और बोरिंग प्रोडक्ट्स ने सबको निराश कर दिया था।`,
+      `इसीलिए ${b.brandName} ने हर डिटेल को एक नए विज़न के साथ तैयार किया।` ,
+      `खास उनके लिए जो बेहतरीन क्वालिटी और ${b.uniqueSellingProp || 'अनोखे कम्फर्ट'} की तलाश में हैं।`,
+      `हर एक फैब्रिक और कारीगरी को घंटों की मेहनत से तराशा गया है।`,
+      `हजारों संतुष्ट ग्राहक इस बदलाव का हिस्सा बन चुके हैं।`,
       `${b.brandName} — अपने स्टाइल को एक नया मुकाम दें। अभी बायो में दिए लिंक से ऑर्डर करें!`
     ]
   },
@@ -758,7 +770,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Roman Hindi / Hinglish',
     getScenes: (b) => [
       `Jab ordinary products kaafi nahi hote, tab humne redefine kiya quality standard.`,
-      `Specially crafted unke liye jo chahte hain unbeatable durability aur ${b.uniqueSellingProp || 'ultimate modern style'}.`,
+      `Har jagah boring aur outdated options dekh kar thak chuke hain?`,
+      `Isiliye ${b.brandName} ne introduce kiya ek bilkul fresh aur modern approach.`,
+      `Specially crafted unke liye jo chahte hain unbeatable durability aur ${b.uniqueSellingProp || 'ultimate style'}.`,
+      `Har ek feature ko meticulously test kiya gaya hai maximum satisfaction ke liye.`,
+      `Join karein thousands of customers jo isko daily choose kar rahe hain.`,
       `${b.brandName} — Aaj hi explore karein. Link in bio to grab your exclusive drop now!`
     ]
   },
@@ -767,7 +783,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'English (Global)',
     getScenes: (b) => [
       `When ordinary isn't enough, we re-engineered the standard from the ground up.`,
-      `Crafted for visionaries who demand relentless performance, timeless design, and ${b.uniqueSellingProp || 'uncompromised craftsmanship'}.`,
+      `A landscape cluttered with mediocrity demanded something truly uncompromising.`,
+      `That is why ${b.brandName} was engineered to challenge conventional design.`,
+      `Crafted for visionaries who demand relentless performance, timeless aesthetic, and ${b.uniqueSellingProp || 'uncompromised craftsmanship'}.`,
+      `Every single contour and composite subjected to rigorous real-world torture tests.`,
+      `Thousands across the globe have already upgraded their daily standard.`,
       `LYORA presents ${b.brandName}. Intelligence. Creativity. Growth. Shop the exclusive drop today.`
     ]
   },
@@ -776,7 +796,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Arabic',
     getScenes: (b) => [
       `عندما لا تكون المعايير العادية كافية، نعيد هندسة التميز من البداية.`,
-      `صُمم خصيصاً لأولئك الذين يطلبون أعلى درجات الجودة والفخامة و${b.uniqueSellingProp || 'الراحة الفائقة'}.`,
+      `الأسواق المليئة بالمنتجات التقليدية كانت بحاجة إلى ابتكار حقيقي.`,
+      `لهذا السبب صُممت ${b.brandName} لتعيد صياغة مفاهيم الجودة والأناقة.`,
+      `صُمم خصيصاً لأولئك الذين يطلبون أعلى درجات الفخامة و${b.uniqueSellingProp || 'الراحة الفائقة'}.`,
+      `كل تفصيلة وكل مادة خضعت لأدق الاختبارات الهندسية لضمان أقصى درجات التحمل.`,
+      `آلاف العملاء في جميع أنحاء العالم اختاروا هذا التميز اليومي.`,
       `${b.brandName} — ارتقِ بأسلوب حياتك الآن. اطلب عبر الرابط في البايو اليوم!`
     ]
   },
@@ -785,7 +809,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Spanish',
     getScenes: (b) => [
       `Cuando lo ordinario no es suficiente, reinventamos los estándares desde cero.`,
+      `Un mercado saturado de mediocridad exigía algo verdaderamente extraordinario.`,
+      `Por eso ${b.brandName} nació para desafiar lo convencional.`,
       `Diseñado para quienes exigen rendimiento implacable, diseño atemporal y ${b.uniqueSellingProp || 'excelencia sin límites'}.`,
+      `Cada costura y textura probada exhaustivamente para garantizar máxima durabilidad.`,
+      `Miles de personas ya han elevado su estándar diario con nosotros.`,
       `${b.brandName} — Redefine tu estilo hoy mismo. ¡Haz clic en el enlace para ordenar!`
     ]
   },
@@ -794,7 +822,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'French',
     getScenes: (b) => [
       `Quand l'ordinaire ne suffit plus, nous réinventons l'excellence et la précision.`,
+      `Un marché saturé d'options ordinaires exigeait une vision sans compromis.`,
+      `C'est pour cela que ${b.brandName} repousse toutes les limites.`,
       `Conçu pour ceux qui exigent une performance irréprochable et ${b.uniqueSellingProp || 'un savoir-faire unique'}.`,
+      `Chaque détail est soumis à des tests rigoureux de perfection et de longévité.`,
+      `Des milliers d'utilisateurs exigeants ont déjà adopté notre signature.`,
       `${b.brandName} — Redéfinissez votre distinction. Commandez via le lien en bio dès aujourd'hui.`
     ]
   },
@@ -803,7 +835,11 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'German',
     getScenes: (b) => [
       `Wenn das Gewöhnliche nicht ausreicht, setzen wir völlig neue Maßstäbe.`,
+      `Ein Markt voller Kompromisse verlangte nach echter technologischer Meisterschaft.`,
+      `Deshalb wurde ${b.brandName} entwickelt, um den Status quo zu verändern.`,
       `Entwickelt für höchste Ansprüche an Zuverlässigkeit, zeitloses Design und ${b.uniqueSellingProp || 'überlegene Qualität'}.`,
+      `Jede Kontur und Komponente unter härtesten Alltagsbedingungen geprüft.`,
+      `Tausende Kunden weltweit vertrauen bereits auf diesen Unterschied.`,
       `${b.brandName} — Erleben Sie den spürbaren Unterschied. Jetzt online sichern!`
     ]
   },
@@ -812,11 +848,92 @@ const MULTILINGUAL_VOICEOVER_ENGINE = {
     name: 'Turkish',
     getScenes: (b) => [
       `Sıradan olan yetmediğinde, mükemmellik standartlarını baştan yazdık.`,
+      `Her yerde aynı sıkıcı ürünleri görmekten yorulanlar için bir devrim başlattık.`,
+      `İşte bu yüzden ${b.brandName} sınırları zorlamak için üretildi.`,
       `En yüksek kalite, benzersiz konfor ve ${b.uniqueSellingProp || 'çağdaş tasarım'} arayanlar için özel üretildi.`,
+      `Her bir dikiş ve yüzey, üstün dayanıklılık için titizlikle test edildi.`,
+      `Binlerce bilinçli kullanıcı bu ayrıcalığın tadını çıkarıyor.`,
       `${b.brandName} — Tarzınızı zirveye taşıyın. Bio'daki linke tıklayarak hemen sipariş verin!`
     ]
   }
 };
+
+function getScenesTimeline(duration, b) {
+  const durStr = (duration || '').toLowerCase();
+
+  if (durStr.includes('10-second')) {
+    return [
+      { time: '0:00 - 0:05', visual: `Rapid dynamic dolly-in on ${b.brandName} silhouette. Dark glossy obsidian floor reflecting neon orange volumetric beams.` },
+      { time: '0:05 - 0:10', visual: `Fast-paced macro product reveal with energetic orange particle embers. High-impact logo lockup with glowing call-to-action.` }
+    ];
+  } else if (durStr.includes('15-second')) {
+    return [
+      { time: '0:00 - 0:04', visual: `Rapid dynamic dolly-in on ${b.brandName} silhouette. Dark glossy obsidian floor reflecting neon orange volumetric beams.` },
+      { time: '0:04 - 0:09', visual: `Extreme macro 100mm lens revealing pristine textures, stitches, and ${b.uniqueSellingProp || 'comfort technology'}. Subtle orange ember particles drift across the frame.` },
+      { time: '0:09 - 0:15', visual: `Fast-paced urban transit shot. Talent stepping forward with explosive confidence. Logo lockup with glowing orange ember ignite effect.` }
+    ];
+  } else if (durStr.includes('30-second')) {
+    return [
+      { time: '0:00 - 0:07', visual: `Moody cinematic opening. Character navigating mundane, ordinary world with subtle slow-motion camera drift.` },
+      { time: '0:07 - 0:15', visual: `Dramatic transition: Vibrant neon orange backlight ignites. 360-degree orbital camera showcasing ${b.brandName} in hyper-realistic 8K.` },
+      { time: '0:15 - 0:22', visual: `Action montage: Dynamic close-ups of product in motion, showing tactile feedback and superior ergonomics.` },
+      { time: '0:22 - 0:30', visual: `Hero wide-angle shot of talent bathed in cinematic rim lighting. Bold typography overlay and seamless CTA.` }
+    ];
+  } else if (durStr.includes('60-second') || durStr.includes('1 min')) {
+    return [
+      { time: '0:00 - 0:10', visual: `Act I (The Problem): Gritty urban atmosphere, black and white tone with solitary talent moving through crowded city.` },
+      { time: '0:10 - 0:22', visual: `Act II (The Discovery): Cinematic slow-motion color bloom. Warm ember rays break through shadow as ${b.brandName} is revealed.` },
+      { time: '0:22 - 0:38', visual: `Act III (The Craft): Extreme macro photogrammetry showing precision manufacturing, raw materials, and ${b.uniqueSellingProp || 'ergonomic mastery'}.` },
+      { time: '0:38 - 0:50', visual: `Act IV (The Peak): Fast rhythmic cross-cutting sequence of athletes and creators performing at their peak with unmatched confidence.` },
+      { time: '0:50 - 1:00', visual: `Act V (The Resolve): Iconic silhouette shot against orange horizon. High-definition title lockup and exclusive website link.` }
+    ];
+  } else if (durStr.includes('90-second') || durStr.includes('1.5 min')) {
+    return [
+      { time: '0:00 - 0:15', visual: `Prologue: Atmospheric establishing drone shot over industrial workshop. Moody mist and anamorphic amber flares.` },
+      { time: '0:15 - 0:35', visual: `The Genesis: Hands of master artisan sketching designs and testing materials for ${b.brandName}.` },
+      { time: '0:35 - 0:55', visual: `Product Breakdown: 3D exploded view detailing internal layers, shock-absorption, and ${b.uniqueSellingProp || 'durable engineering'}.` },
+      { time: '0:55 - 1:15', visual: `Real-World Stress Test: High-octane field testing in extreme elements, rain reflections on obsidian glass.` },
+      { time: '1:15 - 1:30', visual: `The Legacy: Visionary statement from talent looking directly into lens. Minimalist brand card and order prompt.` }
+    ];
+  } else if (durStr.includes('2-minute')) {
+    return [
+      { time: '0:00 - 0:20', visual: `Act 1: Narrative cold-open. Deep conversational documentary lighting showcasing market struggles.` },
+      { time: '0:20 - 0:45', visual: `Act 2: The Breakthrough. First prototype emergence with fiery orange volumetric backlights.` },
+      { time: '0:45 - 1:15', visual: `Act 3: Scientific Examination. Macro laboratory testing of materials and ergonomics.` },
+      { time: '1:15 - 1:40', visual: `Act 4: User Transformations. Authentic customer lifestyle vignettes across global metropolises.` },
+      { time: '1:40 - 2:00', visual: `Act 5: Final Manifesto. Orchestral musical swell, epic drone pan-out, and official launch invitation.` }
+    ];
+  } else if (durStr.includes('3-minute')) {
+    return [
+      { time: '0:00 - 0:25', visual: `Chapter 1: The Frustration. Documentary cinematography exploring why conventional solutions fail modern consumers.` },
+      { time: '0:25 - 0:55', visual: `Chapter 2: The Vision. Founder sketchbook, design studio whiteboard sessions, and radical blue-sky thinking.` },
+      { time: '0:55 - 1:30', visual: `Chapter 3: Material Obsession. Extreme close-ups of custom metallurgy, aerospace fabric, and seamless joinery.` },
+      { time: '1:30 - 2:05', visual: `Chapter 4: The Crucible. Stress testing under extreme thermal, kinetic, and real-world conditions.` },
+      { time: '2:05 - 2:35', visual: `Chapter 5: Cultural Impact. Influential tastemakers unboxing and experiencing the product on camera.` },
+      { time: '2:35 - 3:00', visual: `Chapter 6: The Invitation. Sunset silhouette with fiery ember typography. Direct call-to-action.` }
+    ];
+  } else if (durStr.includes('4-minute')) {
+    return [
+      { time: '0:00 - 0:35', visual: `Part 1: The Landscape. Deep investigative look into industry bottlenecks and stagnant innovation.` },
+      { time: '0:35 - 1:15', visual: `Part 2: The Engineering Journey. 18 months of R&D compressed into high-speed archival film footage.` },
+      { time: '1:15 - 1:55', visual: `Part 3: The Architecture of Quality. Interactive 3D holographic breakdown of ${b.brandName}.` },
+      { time: '1:55 - 2:40', visual: `Part 4: The Human Element. Candid interviews with the engineers, designers, and early adopters.` },
+      { time: '2:40 - 3:25', visual: `Part 5: The Testimonials. Emotional stories of daily productivity and confidence boosts.` },
+      { time: '3:25 - 4:00', visual: `Part 6: Conclusion. A bold cinematic salute to forward-thinkers. Limited-edition VIP invitation.` }
+    ];
+  } else {
+    // 5-Minute Epic Brand Film
+    return [
+      { time: '0:00 - 0:40', visual: `Movement I (The Silence): Hypnotic slow-motion visuals of modern city life in black and orange neon reflections.` },
+      { time: '0:40 - 1:25', visual: `Movement II (The Spark): Behind locked studio doors, the birth of ${b.brandName}'s core philosophy.` },
+      { time: '1:25 - 2:10', visual: `Movement III (The Architecture): Microscopic scan of raw composite materials and custom bespoke finishes.` },
+      { time: '2:10 - 2:55', visual: `Movement IV (The Gauntlet): Unrelenting torture testing in desert dunes, alpine cold, and midnight torrential rain.` },
+      { time: '2:55 - 3:45', visual: `Movement V (The Voices): Raw, unscripted reactions from pioneers who refuse to settle for ordinary.` },
+      { time: '3:45 - 4:30', visual: `Movement VI (The Philosophy): Cinematic monologue on what it means to build something that lasts generations.` },
+      { time: '4:30 - 5:00', visual: `Movement VII (The Horizon): Epic panoramic aerial crane shot rising above clouds. Final brand crescendo and VIP launch access.` }
+    ];
+  }
+}
 
 async function triggerVideoPromptsGeneration() {
   if (!LYORA_STATE.brand.brandName) {
@@ -839,33 +956,34 @@ async function triggerVideoPromptsGeneration() {
   const duration = document.getElementById('videoDuration').value;
   const lang = document.getElementById('videoLanguage') ? document.getElementById('videoLanguage').value : 'roman-urdu';
 
-  const mainPrompt = `Cinematic commercial shot for ${b.brandName} in ${b.industry}. Photorealistic 8K, moody obsidian background with vibrant ember-orange anamorphic lens flare and laser backlight. Dynamic macro camera orbit around the product showcasing ${b.uniqueSellingProp || 'meticulous textures and craftsmanship'}. High-energy atmospheric smoke, cinematic motion blur, premium commercial aesthetic, shot on ARRI Alexa 35, 60fps slow-motion.`;
+  const mainPrompt = `Cinematic commercial shot for ${b.brandName} in ${b.industry}. Photorealistic 8K, moody obsidian background with vibrant ember-orange anamorphic lens flare and laser backlight. Dynamic macro camera orbit around the product showcasing ${b.uniqueSellingProp || 'meticulous textures and craftsmanship'}. High-energy atmospheric smoke, cinematic motion blur, premium commercial aesthetic, shot on ARRI Alexa 35, 60fps slow-motion. Duration target: ${duration}.`;
 
   const langConfig = MULTILINGUAL_VOICEOVER_ENGINE[lang] || MULTILINGUAL_VOICEOVER_ENGINE['roman-urdu'];
   const voices = langConfig.getScenes(b);
+  const timeline = getScenesTimeline(duration, b);
 
   LYORA_STATE.videoPromptData = {
     style: style,
     duration: duration,
     selectedLanguage: lang,
     mainPrompt: mainPrompt,
-    scenes: [
-      { time: '0:00 - 0:04', visual: `Rapid dynamic dolly-in on ${b.brandName} silhouette. Dark glossy obsidian floor reflecting neon orange volumetric beams.`, voice: voices[0] },
-      { time: '0:04 - 0:09', visual: `Extreme macro 100mm lens revealing pristine textures, stitches, and ${b.uniqueSellingProp || 'comfort technology'}. Subtle orange ember particles drift across the frame.`, voice: voices[1] },
-      { time: '0:09 - 0:15', visual: `Fast-paced urban transit shot. Talent stepping forward with explosive confidence. Logo lockup with glowing orange ember ignite effect.`, voice: voices[2] }
-    ]
+    scenes: timeline.map((item, idx) => ({
+      time: item.time,
+      visual: item.visual,
+      voice: voices[idx] || voices[voices.length - 1]
+    }))
   };
 
   renderVideoStoryboard();
-  showToast(`Google Flow prompts generated in ${langConfig.name}!`, 'success');
+  showToast(`Google Flow prompts generated (${duration} in ${langConfig.name})!`, 'success');
 
   if (typeof logActivityEvent === 'function') {
-    logActivityEvent(`Generated Video Storyboard (${langConfig.name})`, 'Google Flow & Veo Prompts', 'Video', 'fa-video');
+    logActivityEvent(`Generated Video Storyboard (${duration})`, 'Google Flow & Veo Prompts', 'Video', 'fa-video');
   }
 
   if (typeof logCreationRadar === 'function') {
     const videoSnippet = LYORA_STATE.videoPromptData ? LYORA_STATE.videoPromptData.mainPrompt.slice(0, 110) + '...' : 'Cinematic video prompt';
-    logCreationRadar(`Google Flow Video (${langConfig.name})`, LYORA_STATE.brand.brandName, 'Cinematic AI Storyboard', videoSnippet);
+    logCreationRadar(`Google Flow Video (${duration})`, LYORA_STATE.brand.brandName, 'Cinematic AI Storyboard', videoSnippet);
   }
 }
 
@@ -883,7 +1001,7 @@ function renderVideoStoryboard() {
         <div>
           <h4><i class="fa-solid fa-clapperboard text-orange"></i> Google Flow, Veo & Sora Ready AI Prompt</h4>
           <span style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 3px;">
-            <i class="fa-solid fa-language text-orange"></i> Active Voiceover: <strong>${langConfig.name}</strong> • ${d.style}
+            <i class="fa-solid fa-clock text-orange"></i> Length: <strong>${d.duration}</strong> • <i class="fa-solid fa-language text-orange"></i> Voiceover: <strong>${langConfig.name}</strong> • ${d.style}
           </span>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="copyVideoPromptOnly()">
@@ -906,7 +1024,7 @@ function renderVideoStoryboard() {
       </div>
 
       <h5 style="color: #fff; margin-top: 16px; margin-bottom: 8px;">
-        <i class="fa-solid fa-list-ol text-orange"></i> Shot-By-Shot Storyboard & Timeline (${d.duration})
+        <i class="fa-solid fa-list-ol text-orange"></i> Shot-By-Shot Storyboard & Timeline (${d.duration} • ${d.scenes.length} Scenes)
       </h5>
 
       <div class="scene-timeline">
@@ -939,7 +1057,7 @@ function switchVideoVoiceLanguage(langKey) {
   const voices = langConfig.getScenes(b);
 
   LYORA_STATE.videoPromptData.scenes.forEach((scene, idx) => {
-    if (voices[idx]) scene.voice = voices[idx];
+    scene.voice = voices[idx] || voices[voices.length - 1];
   });
 
   renderVideoStoryboard();
