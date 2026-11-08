@@ -488,6 +488,115 @@ body.dark-theme {
 }
 
 /* =========================================================
+   7-DAY FREE LAUNCH SPECIAL BANNER & LIVE COUNTDOWN
+   ========================================================= */
+.launch-special-banner {
+  background: linear-gradient(135deg, rgba(28, 16, 12, 0.95) 0%, rgba(16, 12, 18, 0.98) 100%);
+  border: 1px solid var(--primary-orange);
+  border-radius: var(--radius-lg);
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 0 30px rgba(255, 85, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.launch-special-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--gradient-orange);
+}
+
+.launch-banner-left {
+  max-width: 620px;
+}
+
+.launch-pulse-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 85, 0, 0.18);
+  border: 1px solid var(--primary-orange);
+  color: #ffaa77;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 85, 0, 0.4); }
+  50% { box-shadow: 0 0 16px rgba(255, 85, 0, 0.8); }
+}
+
+.launch-special-banner h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.launch-special-banner p {
+  font-size: 13px;
+  color: #d1d1d8;
+  line-height: 1.5;
+}
+
+.launch-countdown-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 10, 14, 0.8);
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.count-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+}
+
+.count-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary-orange);
+  line-height: 1;
+}
+
+.count-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.cd-colon {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-orange);
+  margin-bottom: 12px;
+}
+
+/* =========================================================
    HERO STRIP (Matching the Reference Landing Image)
    ========================================================= */
 .hero-orange-strip {

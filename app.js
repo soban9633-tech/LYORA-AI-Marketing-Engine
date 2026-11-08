@@ -15,6 +15,7 @@
 
 // ================= GLOBAL APPLICATION STATE =================
 const LYORA_STATE = {
+  isLaunchWeek: true,
   user: {
     name: 'Founder',
     email: 'user@lyora.ai',
@@ -43,6 +44,7 @@ const LYORA_STATE = {
 // ================= INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', () => {
   loadPersistedState();
+  initLaunchWeekCountdown();
   initNavigation();
   initMobileMenu();
   updateUI();
@@ -52,6 +54,61 @@ document.addEventListener('DOMContentLoaded', () => {
     preloadDemoBrandData(false);
   }
 });
+
+// 7-Day Free Launch Week Special Countdown Engine
+function initLaunchWeekCountdown() {
+  let launchStart = localStorage.getItem('lyora_launch_start');
+  if (!launchStart) {
+    launchStart = Date.now();
+    localStorage.setItem('lyora_launch_start', launchStart);
+  } else {
+    launchStart = parseInt(launchStart, 10);
+  }
+
+  const durationMs = 7 * 24 * 60 * 60 * 1000; // 7 Full Days
+  const launchEnd = launchStart + durationMs;
+
+  function updateTimer() {
+    const now = Date.now();
+    const remaining = launchEnd - now;
+
+    if (remaining > 0) {
+      LYORA_STATE.isLaunchWeek = true;
+
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((remaining % (1000 * 60)) / 1000);
+
+      const dEl = document.getElementById('cdDays');
+      const hEl = document.getElementById('cdHours');
+      const mEl = document.getElementById('cdMins');
+      const sEl = document.getElementById('cdSecs');
+
+      if (dEl) dEl.textContent = String(days).padStart(2, '0');
+      if (hEl) hEl.textContent = String(hours).padStart(2, '0');
+      if (mEl) mEl.textContent = String(mins).padStart(2, '0');
+      if (sEl) sEl.textContent = String(secs).padStart(2, '0');
+    } else {
+      LYORA_STATE.isLaunchWeek = false;
+      const banner = document.getElementById('launchWeekBanner');
+      if (banner) {
+        banner.innerHTML = `
+          <div class="launch-banner-left">
+            <span class="launch-pulse-tag" style="background: rgba(255, 85, 0, 0.2);"><i class="fa-solid fa-clock"></i> LAUNCH OFFER CONCLUDED</span>
+            <h3>Free Launch Week Has Ended!</h3>
+            <p>Upgrade to LYORA Pro Growth for just PKR 4,000 / month to continue unlimited AI marketing assets.</p>
+          </div>
+          <button class="btn btn-hero" onclick="openCheckout('Pro Growth', 15, 4000)">Upgrade to Pro (PKR 4,000)</button>
+        `;
+      }
+    }
+    updateUI();
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
 
 // Load from LocalStorage
 function loadPersistedState() {
@@ -169,6 +226,11 @@ function updateUI() {
     if (creditCountEl) creditCountEl.textContent = 'Unlimited (Pro)';
     if (creditFillEl) creditFillEl.style.width = '100%';
     if (dashCreditsEl) dashCreditsEl.textContent = 'Unlimited (Pro Plan)';
+  } else if (LYORA_STATE.isLaunchWeek) {
+    // 7-Day Free Launch Pass
+    if (creditCountEl) creditCountEl.textContent = 'Unlimited (Launch Pass)';
+    if (creditFillEl) creditFillEl.style.width = '100%';
+    if (dashCreditsEl) dashCreditsEl.textContent = 'Unlimited (Free Week)';
   } else {
     if (creditCountEl) creditCountEl.textContent = `${LYORA_STATE.user.credits} / 5`;
     if (creditFillEl) creditFillEl.style.width = `${(LYORA_STATE.user.credits / 5) * 100}%`;
@@ -181,12 +243,15 @@ function updateUI() {
   const userEmailEl = document.getElementById('userDisplayEmail');
 
   if (userNameEl) userNameEl.textContent = LYORA_STATE.user.name || 'Marketer';
-  if (userEmailEl) userEmailEl.textContent = isPro ? 'Pro Member' : 'Free Tier';
+  if (userEmailEl) userEmailEl.textContent = isPro ? 'Pro Member' : (LYORA_STATE.isLaunchWeek ? 'Free Launch Pass' : 'Free Tier');
   if (userAvatarEl) userAvatarEl.textContent = (LYORA_STATE.user.name || 'L')[0].toUpperCase();
 }
 
 // Consume 1 credit or check plan
 function verifyCredit() {
+  // During 7-Day Launch Week, it is 100% Free & Unlimited for all users!
+  if (LYORA_STATE.isLaunchWeek) return true;
+
   if (LYORA_STATE.user.plan !== 'free') return true;
   if (LYORA_STATE.user.credits > 0) {
     LYORA_STATE.user.credits--;
@@ -194,7 +259,7 @@ function verifyCredit() {
     updateUI();
     return true;
   } else {
-    showToast('Aapke free credits khatam ho gaye hain! Please Pro Plan par upgrade karein.', 'warning');
+    showToast('Aapka 7-Day Free Launch Pass mukammal ho gaya hai! Please Pro Plan activate karein.', 'warning');
     openModal('pricingModal');
     return false;
   }
