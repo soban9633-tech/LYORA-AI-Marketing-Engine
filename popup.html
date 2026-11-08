@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BidCraft AI - Proposal Generator</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <div>
+          <h1 class="title">
+            BidCraft <span class="badge-pro">AI</span>
+            <span id="trialBadge" class="badge-plan badge-trial">Free: 5 Left</span>
+          </h1>
+          <p class="subtitle">Upwork & LinkedIn Proposal Writer</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btnOpenLicense" class="icon-btn btn-crown" title="Pro License / Upgrade">👑</button>
+        <button id="btnHistory" class="icon-btn" title="View History">📜</button>
+        <button id="btnSettings" class="icon-btn" title="Settings & API Key">⚙️</button>
+      </div>
+    </header>
+
+    <!-- API Key Notice (Hidden if already saved) -->
+    <div id="apiKeyBanner" class="banner banner-warning" style="display: none;">
+      <span>⚠️ Please set your free Gemini API key to start generating.</span>
+      <button id="btnOpenKeyModal" class="btn-link">Set Key</button>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="upwork">Upwork Proposal</button>
+      <button class="tab-btn" data-tab="linkedin">LinkedIn Outreach</button>
+      <button class="tab-btn" data-tab="cold">Cold Email/DM</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="content-body">
+      <!-- Auto Detect Button -->
+      <div class="auto-detect-bar">
+        <button id="btnAutoDetect" class="btn-secondary" title="Fetch job/post details from current open tab">
+          <span class="icon">🎯</span> Auto-Grab from Current Tab
+        </button>
+        <span id="detectStatus" class="detect-status"></span>
+      </div>
+
+      <!-- Form Inputs -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="jobTitle">Job Title / Project Name</label>
+          <span class="optional-tag">Required</span>
+        </div>
+        <input type="text" id="jobTitle" placeholder="e.g. Senior Full-Stack React & Node Developer Needed" />
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="jobDesc">Job Description / Post Details</label>
+          <span id="charCount" class="char-count">0 chars</span>
+        </div>
+        <textarea id="jobDesc" rows="4" placeholder="Paste the job description or client's post here..."></textarea>
+      </div>
+
+      <!-- Screening Questions (Optional for Upwork) -->
+      <div class="form-group" id="questionsGroup">
+        <div class="label-row">
+          <label for="screeningQuestions">Client's Screening Questions <span class="optional-tag">Optional</span></label>
+        </div>
+        <textarea id="screeningQuestions" rows="2" placeholder="e.g. 1. Have you built something similar? 2. What is your timeline?"></textarea>
+      </div>
+
+      <!-- Profile & Tone Selection -->
+      <div class="grid-2">
+        <div class="form-group">
+          <div class="label-row">
+            <label for="userProfile">My Profile / Skills</label>
+            <button id="btnManageProfiles" class="btn-link" title="Save your skills/bio">Manage</button>
+          </div>
+          <select id="userProfile">
+            <option value="default">General Freelancer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="proposalTone">Proposal Style / Tone</label>
+          <select id="proposalTone">
+            <option value="hook_proof_cta" selected>Winning Upwork (Hook + Proof + CTA)</option>
+            <option value="short_punchy">Short & Direct (&lt; 120 words)</option>
+            <option value="consultative">Senior Consultant & Problem Solver</option>
+            <option value="casual_friendly">Friendly & Conversational</option>
+            <option value="linkedin_warm">Warm Connection Pitch (LinkedIn)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button id="btnGenerate" class="btn-primary">
+        <span class="btn-text">✨ Generate Winning Proposal</span>
+        <div class="spinner" style="display: none;"></div>
+      </button>
+
+      <!-- Proposal Result Box -->
+      <div id="resultCard" class="result-card" style="display: none;">
+        <div class="result-header">
+          <div class="result-title">
+            <span>Generated Proposal</span>
+            <span id="wordStats" class="badge-stats">0 words</span>
+          </div>
+          <div class="result-actions">
+            <button id="btnCopy" class="action-btn" title="Copy proposal to clipboard">📋 Copy</button>
+            <button id="btnRegenerate" class="action-btn" title="Try another variation">🔄 Retry</button>
+          </div>
+        </div>
+
+        <textarea id="proposalOutput" class="proposal-output" rows="9"></textarea>
+
+        <!-- Quick AI Polish Pills -->
+        <div class="polish-pills">
+          <span class="pills-label">Quick Refine:</span>
+          <button class="pill-btn" data-action="shorter">✂️ Make Shorter</button>
+          <button class="pill-btn" data-action="hook">🔥 Stronger Hook</button>
+          <button class="pill-btn" data-action="urgent">⚡ Add Urgency</button>
+          <button class="pill-btn" data-action="questions">❓ Better CTA Question</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modals -->
+
+    <!-- 1. License & Upgrade Modal (The Monetization Lock!) -->
+    <div id="modalLicense" class="modal-overlay" style="display: none;">
+      <div class="modal modal-upgrade">
+        <div class="modal-header">
+          <h2>🔒 Upgrade to BidCraft AI PRO</h2>
+          <button class="btn-close" id="btnCloseLicense">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="upgrade-hero">
+            <div class="upgrade-icon">👑</div>
+            <h3 id="upgradeModalHeading">Free Trial Limit Reached!</h3>
+            <p class="upgrade-sub">Unlock <strong>Unlimited AI Winning Proposals</strong> forever with a Lifetime License.</p>
+            <div class="price-badge">
+              <span class="price-val">PKR 1,500</span>
+              <span class="price-period">One-Time Lifetime Access</span>
+            </div>
+          </div>
+
+          <div class="payment-card">
+            <div class="payment-header">🏦 Bank Transfer (UBL):</div>
+            
+            <div class="bank-details-box">
+              <div class="bank-row">
+                <span class="bank-label">Bank:</span>
+                <span class="bank-val"><span class="badge-ubl">UBL</span> United Bank Limited</span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">Account No:</span>
+                <span class="bank-val font-mono"><strong id="dispAccountNo">1629343864185</strong></span>
+                <button class="btn-copy-num" id="btnCopyAcc" data-num="1629343864185" title="Copy Account Number">Copy</button>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">Account Title:</span>
+                <span class="bank-val"><strong id="dispAccountTitle">Hafiz Muhammad Soban</strong></span>
+              </div>
+            </div>
+
+            <p class="payment-step-info">
+              1. Transfer <strong>PKR 1,500</strong> to the UBL account above.<br>
+              2. Send payment screenshot on WhatsApp to receive your instant License Key:
+            </p>
+
+            <a id="btnWhatsAppPay" href="https://wa.me/923143530776?text=Salam!%20Mene%20BidCraft%20AI%20Pro%20k%20PKR%201500%20Hafiz%20Muhammad%20Soban%20(UBL)%20account%20me%20transfer%20kiye%20hain.%20Kindly%20License%20Key%20send%20karein." target="_blank" class="btn-whatsapp">
+              <span>💬 Send Receipt on WhatsApp (0314-3530776)</span>
+            </a>
+          </div>
+
+          <!-- Enter License Key Box -->
+          <div class="license-activate-box">
+            <label for="licenseKeyInput">Already have a License Key?</label>
+            <div class="license-input-row">
+              <input type="text" id="licenseKeyInput" placeholder="BCPRO-XXXX-XXXX" />
+              <button id="btnVerifyKey" class="btn-primary-sm">Activate PRO</button>
+            </div>
+            <div id="licenseFeedback" class="license-feedback" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Settings Modal -->
+    <div id="modalSettings" class="modal-overlay" style="display: none;">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Settings & Configuration</h2>
+          <button class="btn-close" id="btnCloseSettings">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- License Status Box in Settings -->
+          <div class="form-group license-status-group">
+            <div class="label-row">
+              <label>Plan & License Status</label>
+              <span id="settingsPlanStatus" class="badge-stats">Free Trial</span>
+            </div>
+            <button id="btnSettingsOpenLicense" class="btn-secondary" style="width: 100%; margin-top: 4px;">
+              👑 Upgrade to PRO / Enter License Key
+            </button>
+          </div>
+
+          <!-- Seller Payment Configuration -->
+          <div class="form-group seller-config-box">
+            <div class="label-row">
+              <label>Seller Payment & WhatsApp Details</label>
+            </div>
+            <div class="form-group" style="margin-bottom: 6px;">
+              <small class="help-text">UBL Account Number:</small>
+              <input type="text" id="sellerAccountNo" placeholder="1629343864185" value="1629343864185" />
+            </div>
+            <div class="form-group" style="margin-bottom: 6px;">
+              <small class="help-text">Account Title:</small>
+              <input type="text" id="sellerAccountTitle" placeholder="Hafiz Muhammad Soban" value="Hafiz Muhammad Soban" />
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <small class="help-text">WhatsApp Contact Number:</small>
+              <input type="text" id="sellerWhatsApp" placeholder="03143530776" value="03143530776" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="geminiApiKey">Google Gemini API Key (Optional)</label>
+            <input type="password" id="geminiApiKey" placeholder="AIzaSy..." />
+            <small class="help-text">
+              Free API key available in 30 seconds from 
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer">Google AI Studio</a>.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="aiModel">AI Model</label>
+            <select id="aiModel">
+              <option value="gemini-1.5-flash" selected>Gemini 1.5 Flash (Recommended)</option>
+              <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+              <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customInstructions">Custom Signature / Rules (Optional)</label>
+            <textarea id="customInstructions" rows="2" placeholder="e.g. Always end with 'Best regards, Ali' and mention 5+ years experience."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnSaveSettings" class="btn-primary">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Profile Management Modal -->
+    <div id="modalProfiles" class="modal-overlay" style="display: none;">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Manage Freelancer Profiles</h2>
+          <button class="btn-close" id="btnCloseProfiles">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="subtitle">Save your core skills, portfolio links, and bio so BidCraft writes tailored proposals for your exact domain.</p>
+          
+          <div class="form-group">
+            <label for="profileName">Profile Name</label>
+            <input type="text" id="profileName" placeholder="e.g. Ali (Full-Stack Developer)" />
+          </div>
+
+          <div class="form-group">
+            <label for="profileBio">Your Bio & Past Experience</label>
+            <textarea id="profileBio" rows="3" placeholder="e.g. 4+ years of building Next.js and Node.js SaaS apps. Optimized performance for 50+ clients..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="profilePortfolio">Portfolio / GitHub Links (Optional)</label>
+            <input type="text" id="profilePortfolio" placeholder="https://github.com/myname or https://myportfolio.com" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnSaveProfile" class="btn-primary">Save Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. History Drawer / Modal -->
+    <div id="modalHistory" class="modal-overlay" style="display: none;">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Recent Proposals History</h2>
+          <button class="btn-close" id="btnCloseHistory">✕</button>
+        </div>
+        <div class="modal-body" id="historyList">
+          <p class="empty-state">No saved proposals yet. Generate your first one!</p>
+        </div>
+        <div class="modal-footer">
+          <button id="btnClearHistory" class="btn-secondary">Clear History</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>BidCraft AI v1.0 • Built to Win High-Ticket Clients</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
