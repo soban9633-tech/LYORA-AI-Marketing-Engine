@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lyoramarketing.vercel.app/sitemap.xml
