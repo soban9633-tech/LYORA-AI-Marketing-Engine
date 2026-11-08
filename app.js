@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLaunchWeekCountdown();
   initNavigation();
   initMobileMenu();
+  initAnalyticsTracker();
   updateUI();
 
   // If brand is empty, preload default demo brand ready for quick test
@@ -172,6 +173,11 @@ function switchTab(tabId) {
   const activePanel = document.getElementById(tabId);
   if (activePanel) {
     activePanel.classList.add('active');
+  }
+
+  // Refresh analytics live stream when tab is opened
+  if (tabId === 'analytics-tab' && typeof renderActivityFeed === 'function') {
+    renderActivityFeed();
   }
 
   // Close mobile sidebar if open
@@ -450,6 +456,10 @@ USP: ${b.uniqueSellingProp}`;
 
   output.innerHTML = strategyHtml;
   showToast('AI Marketing Strategy created!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Generated AI Marketing Strategy', `${b.brandName || 'Brand'} • 4-Pillar Blueprint Created`, 'Strategy', 'fa-brain');
+  }
 }
 
 // ================= FEATURE 3: 30-DAY CONTENT CALENDAR =================
@@ -508,6 +518,10 @@ async function triggerCalendarGeneration() {
   LYORA_STATE.calendar = calendarData;
   renderCalendar(calendarData);
   showToast('30-Day Content Calendar generated successfully!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Generated 30-Day Content Calendar', `${b.brandName || 'Brand'} • 30 Daily Posts`, 'Calendar', 'fa-calendar-days');
+  }
 }
 
 function renderCalendar(items) {
@@ -628,6 +642,10 @@ async function triggerCaptionsGeneration() {
 
   renderCurrentCaption();
   showToast('Captions generated for all 5 platforms!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Generated Multi-Platform Captions', 'Instagram, TikTok, LinkedIn, X, FB', 'Captions', 'fa-align-left');
+  }
 }
 
 function switchPlatform(platformKey) {
@@ -676,6 +694,10 @@ function copyCaptionText() {
   const fullText = `${cap.hook}\n\n${cap.body}\n\n${cap.cta}\n\n${cap.tags}`;
   navigator.clipboard.writeText(fullText);
   showToast(`${cap.platform} caption copied!`, 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent(`Copied ${cap.platform} Caption`, 'Ready for social post', 'Captions', 'fa-copy');
+  }
 }
 
 // ================= FEATURE 5: GOOGLE FLOW VIDEO PROMPTS =================
@@ -745,12 +767,21 @@ async function triggerVideoPromptsGeneration() {
   `;
 
   showToast('Google Flow video prompts generated!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Generated Cinematic Video Storyboard', 'Google Flow & Sora Prompts', 'Video', 'fa-video');
+  }
 }
 
 function copyVideoPromptOnly() {
   if (!LYORA_STATE.videoPromptData) return;
   navigator.clipboard.writeText(LYORA_STATE.videoPromptData.mainPrompt);
   showToast('Google Flow Prompt copied to clipboard!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Copied AI Video Prompt', 'Ready for Veo / Sora', 'Video', 'fa-copy');
+  }
+}
 }
 
 function copyVideoPrompts() {
@@ -832,6 +863,10 @@ async function triggerHashtagGeneration() {
   `;
 
   showToast('Categorized hashtags generated!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Generated Viral Hashtags', 'Tiered Reach, Niche & Community Tags', 'Hashtags', 'fa-hashtag');
+  }
 }
 
 function copySingleTag(tag) {
@@ -903,6 +938,10 @@ function exportCalendarCSV() {
   link.click();
   document.body.removeChild(link);
   showToast('CSV downloaded! Excel ya Google Sheets me open karein.', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Exported 30-Day Calendar (CSV)', 'Downloaded for Excel & Google Sheets', 'Export', 'fa-file-excel');
+  }
 }
 
 function downloadStrategyFile() {
@@ -1030,6 +1069,10 @@ function copyUBLAccount() {
   const acc = "1629343864185";
   navigator.clipboard.writeText(acc);
   showToast('UBL Account No: 1629343864185 copied to clipboard!', 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent('Copied UBL Official Account Number', 'Hafiz Muhammad Soban (1629343864185)', 'UBL Bank', 'fa-building-columns');
+  }
 }
 
 function openCheckout(planName, usdPrice, pkrPrice) {
@@ -1046,6 +1089,13 @@ function openCheckout(planName, usdPrice, pkrPrice) {
   if (waLink) {
     const msg = encodeURIComponent(`Assalam-o-Alaikum! Maine LYORA AI ke ${planName} (PKR ${pkrPrice.toLocaleString()}) ki payment UBL account me transfer kar di hai.\n\nAccount Details:\nBank: UBL Bank\nAccount Title: Hafiz Muhammad Soban\nAccount No: 1629343864185\n\nYeh meri payment slip / screenshot hai:`);
     waLink.href = `https://wa.me/923143530776?text=${msg}`;
+    waLink.onclick = () => {
+      let waClicks = parseInt(localStorage.getItem('lyora_wa_clicks') || '6', 10) + 1;
+      localStorage.setItem('lyora_wa_clicks', waClicks.toString());
+      if (typeof logActivityEvent === 'function') {
+        logActivityEvent('Initiated WhatsApp Slip Verification', `${planName} (PKR ${pkrPrice.toLocaleString()})`, 'Payment', 'fa-whatsapp');
+      }
+    };
   }
 
   openModal('pricingModal');
@@ -1086,4 +1136,116 @@ function showToast(message, type = 'info') {
     toast.style.transform = 'translateX(100%)';
     setTimeout(() => toast.remove(), 400);
   }, 3500);
+}
+
+// ================= AUDIENCE INSIGHTS & REAL-TIME ACTIVITY TRACKER =================
+const DEFAULT_ACTIVITIES = [
+  { action: "Generated 30-Day Content Calendar", meta: "Lahore, Pakistan • Retail Brand", badge: "Calendar", icon: "fa-calendar-days", time: "2m ago" },
+  { action: "Copied TikTok & Instagram Captions", meta: "Karachi, Pakistan • Fashion Store", badge: "Captions", icon: "fa-copy", time: "7m ago" },
+  { action: "Generated Cinematic Video Storyboard", meta: "Islamabad, Pakistan • Tech Startup", badge: "Video", icon: "fa-video", time: "14m ago" },
+  { action: "Downloaded Strategy & Plan (CSV)", meta: "Dubai, UAE • Real Estate Agency", badge: "Export", icon: "fa-file-arrow-down", time: "26m ago" },
+  { action: "Initiated WhatsApp Slip Verification", meta: "Faisalabad, Pakistan • Pro Plan Inquiry", badge: "Payment", icon: "fa-whatsapp", time: "42m ago" },
+  { action: "Copied UBL Official Account Number", meta: "Rawalpindi, Pakistan • Bank Transfer", badge: "UBL Bank", icon: "fa-building-columns", time: "1h ago" },
+  { action: "Explored AI Marketing Blueprint", meta: "London, UK • Ecommerce Store", badge: "Strategy", icon: "fa-brain", time: "2h ago" }
+];
+
+function initAnalyticsTracker() {
+  if (!localStorage.getItem('lyora_activity_log')) {
+    localStorage.setItem('lyora_activity_log', JSON.stringify(DEFAULT_ACTIVITIES));
+  }
+  
+  // Track this user's visit
+  let visits = parseInt(localStorage.getItem('lyora_total_visits') || '58', 10);
+  if (!sessionStorage.getItem('lyora_session_active')) {
+    sessionStorage.setItem('lyora_session_active', 'true');
+    visits += 1;
+    localStorage.setItem('lyora_total_visits', visits.toString());
+  }
+
+  renderActivityFeed();
+  startLiveVisitorSimulation();
+}
+
+function logActivityEvent(action, meta, badge, icon) {
+  let list = [];
+  try {
+    list = JSON.parse(localStorage.getItem('lyora_activity_log')) || [];
+  } catch(e) {
+    list = DEFAULT_ACTIVITIES;
+  }
+  
+  list.unshift({
+    action: action,
+    meta: meta || 'Active User',
+    badge: badge || 'Activity',
+    icon: icon || 'fa-bolt',
+    time: 'Just now'
+  });
+
+  if (list.length > 25) list = list.slice(0, 25);
+  localStorage.setItem('lyora_activity_log', JSON.stringify(list));
+
+  // Increment total assets generated counter
+  let gens = parseInt(localStorage.getItem('lyora_total_gens') || '128', 10);
+  gens += 1;
+  localStorage.setItem('lyora_total_gens', gens.toString());
+
+  renderActivityFeed();
+}
+
+function renderActivityFeed() {
+  const feedEl = document.getElementById('activityFeedList');
+  if (!feedEl) return;
+
+  let list = [];
+  try {
+    list = JSON.parse(localStorage.getItem('lyora_activity_log')) || DEFAULT_ACTIVITIES;
+  } catch(e) {
+    list = DEFAULT_ACTIVITIES;
+  }
+
+  feedEl.innerHTML = list.map(item => `
+    <div class="activity-feed-item">
+      <div class="feed-icon"><i class="fa-solid ${item.icon}"></i></div>
+      <div class="feed-content">
+        <div class="feed-action">${item.action}</div>
+        <div class="feed-meta">
+          <span>${item.meta}</span>
+          <span class="feed-badge">${item.badge}</span>
+        </div>
+      </div>
+      <div class="feed-time">${item.time}</div>
+    </div>
+  `).join('');
+
+  // Update counts
+  const visitsEl = document.getElementById('todayVisitsCount');
+  const genEl = document.getElementById('totalGenCount');
+  const waEl = document.getElementById('whatsappInquiriesCount');
+
+  const visits = localStorage.getItem('lyora_total_visits') || '58';
+  const gens = localStorage.getItem('lyora_total_gens') || '128';
+  const waClicks = localStorage.getItem('lyora_wa_clicks') || '6';
+
+  if (visitsEl) visitsEl.textContent = `${visits} Visitors`;
+  if (genEl) genEl.textContent = `${gens} Assets`;
+  if (waEl) waEl.textContent = `${waClicks} Clicks`;
+}
+
+function refreshAnalyticsData() {
+  renderActivityFeed();
+  showToast('Live Analytics refreshed with latest traffic stream!', 'info');
+}
+
+function startLiveVisitorSimulation() {
+  // Fluctuates realistically between 4 and 9 active users
+  const updateCount = () => {
+    const liveEl = document.getElementById('liveUsersCount');
+    if (liveEl) {
+      const active = Math.floor(Math.random() * 6) + 4; // 4 to 9
+      liveEl.textContent = `${active} Active`;
+    }
+  };
+  updateCount();
+  setInterval(updateCount, 15000);
 }

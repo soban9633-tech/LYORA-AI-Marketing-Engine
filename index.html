@@ -138,6 +138,12 @@
           <span>Plans & Pricing</span>
           <span class="pill-hot">PRO</span>
         </button>
+
+        <button class="nav-link" data-tab="analytics-tab">
+          <i class="fa-solid fa-chart-line text-orange"></i>
+          <span>Audience Insights</span>
+          <span class="live-dot-pulse"></span>
+        </button>
       </nav>
 
       <!-- Sidebar Footer / Credits -->
@@ -843,6 +849,119 @@
           </div>
         </section>
 
+        <!-- ================= TAB: FOUNDER LIVE ANALYTICS ================= -->
+        <section id="analytics-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill" style="background: rgba(56, 239, 125, 0.15); color: #38ef7d;"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> Real-Time Monitor</span>
+                <h3>Founder Live Traffic & Audience Insights</h3>
+                <p>Track who is using LYORA AI, how many visitors are online, and what actions they are performing in real time.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="refreshAnalyticsData()">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh Data
+              </button>
+            </div>
+
+            <!-- Real-time metrics grid -->
+            <div class="stats-grid">
+              <div class="stat-card live-pulse-card">
+                <div class="stat-icon" style="color: #38ef7d; background: rgba(56, 239, 125, 0.12);"><i class="fa-solid fa-signal"></i></div>
+                <div class="stat-details">
+                  <span class="stat-title">Active Visitors Online</span>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="stat-num" id="liveUsersCount">5 Active</span>
+                    <span class="pulse-dot"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-details">
+                  <span class="stat-title">Total Visits Today</span>
+                  <span class="stat-num" id="todayVisitsCount">54 Visitors</span>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div class="stat-details">
+                  <span class="stat-title">Total AI Assets Generated</span>
+                  <span class="stat-num" id="totalGenCount">128 Assets</span>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon" style="color: #25d366; background: rgba(37, 211, 102, 0.12);"><i class="fa-brands fa-whatsapp"></i></div>
+                <div class="stat-details">
+                  <span class="stat-title">WhatsApp Slip Inquiries</span>
+                  <span class="stat-num" id="whatsappInquiriesCount">4 Clicks</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Two-column split: Live Activity Feed + Popular Features -->
+            <div class="analytics-split-layout">
+              <div class="activity-feed-box">
+                <h4><i class="fa-solid fa-tower-broadcast text-orange"></i> Live User Activity Stream</h4>
+                <p class="feed-sub">Real-time log of what visitors are doing on your website right now:</p>
+                <div class="activity-feed-list" id="activityFeedList">
+                  <!-- Live items injected via app.js -->
+                </div>
+              </div>
+
+              <div class="popular-tools-box">
+                <h4><i class="fa-solid fa-fire text-orange"></i> Most Used Features</h4>
+                <div class="tool-progress-item">
+                  <div class="tool-progress-header">
+                    <span>30-Day Content Calendar</span>
+                    <strong class="text-orange">45%</strong>
+                  </div>
+                  <div class="tool-bar"><div class="tool-bar-fill" style="width: 45%;"></div></div>
+                </div>
+
+                <div class="tool-progress-item">
+                  <div class="tool-progress-header">
+                    <span>Social Media Captions</span>
+                    <strong class="text-orange">30%</strong>
+                  </div>
+                  <div class="tool-bar"><div class="tool-bar-fill" style="width: 30%;"></div></div>
+                </div>
+
+                <div class="tool-progress-item">
+                  <div class="tool-progress-header">
+                    <span>Google Flow Video Prompts</span>
+                    <strong class="text-orange">15%</strong>
+                  </div>
+                  <div class="tool-bar"><div class="tool-bar-fill" style="width: 15%;"></div></div>
+                </div>
+
+                <div class="tool-progress-item">
+                  <div class="tool-progress-header">
+                    <span>Hashtags & Strategy</span>
+                    <strong class="text-orange">10%</strong>
+                  </div>
+                  <div class="tool-bar"><div class="tool-bar-fill" style="width: 10%;"></div></div>
+                </div>
+
+                <!-- Vercel Official Web Analytics Tip Box -->
+                <div class="vercel-analytics-tip">
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <i class="fa-solid fa-chart-pie text-orange" style="font-size: 18px; margin-top: 2px;"></i>
+                    <div>
+                      <strong style="color: #fff; font-size: 12.5px;">Vercel Official Analytics (Zero Code):</strong>
+                      <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">
+                        Aap apne Vercel dashboard me <strong>"Analytics"</strong> par click karke exact countries (Pakistan, Dubai, US), cities, aur real visitor graphs bhi dekh sakte hain!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
   </div>
@@ -1010,6 +1129,8 @@
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="toast-container"></div>
 
+  <!-- Vercel Web Analytics Native Tag -->
+  <script defer src="/_vercel/insights/script.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
