@@ -1005,6 +1005,16 @@ function openModal(id) {
   if (modal) modal.classList.remove('hidden');
 }
 
+function openStatModal(id) {
+  openModal(id);
+  const visits = localStorage.getItem('lyora_total_visits') || '59';
+  const gens = localStorage.getItem('lyora_total_gens') || '128';
+  const modalVisits = document.getElementById('modalVisitsCount');
+  const modalGens = document.getElementById('modalGenCount');
+  if (modalVisits) modalVisits.textContent = `${visits} Visitors`;
+  if (modalGens) modalGens.textContent = `${gens} Assets`;
+}
+
 function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.add('hidden');

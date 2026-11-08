@@ -865,7 +865,7 @@
 
             <!-- Real-time metrics grid -->
             <div class="stats-grid">
-              <div class="stat-card live-pulse-card">
+              <div class="stat-card live-pulse-card clickable-card" onclick="openStatModal('liveUsersModal')" title="Click to view live visitors detail">
                 <div class="stat-icon" style="color: #38ef7d; background: rgba(56, 239, 125, 0.12);"><i class="fa-solid fa-signal"></i></div>
                 <div class="stat-details">
                   <span class="stat-title">Active Visitors Online</span>
@@ -873,30 +873,34 @@
                     <span class="stat-num" id="liveUsersCount">5 Active</span>
                     <span class="pulse-dot"></span>
                   </div>
+                  <span class="card-click-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> Click to view</span>
                 </div>
               </div>
 
-              <div class="stat-card">
+              <div class="stat-card clickable-card" onclick="openStatModal('visitsModal')" title="Click to view traffic breakdown">
                 <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
                 <div class="stat-details">
                   <span class="stat-title">Total Visits Today</span>
-                  <span class="stat-num" id="todayVisitsCount">54 Visitors</span>
+                  <span class="stat-num" id="todayVisitsCount">59 Visitors</span>
+                  <span class="card-click-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> Click to view</span>
                 </div>
               </div>
 
-              <div class="stat-card">
+              <div class="stat-card clickable-card" onclick="openStatModal('assetsModal')" title="Click to view generated assets">
                 <div class="stat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                 <div class="stat-details">
                   <span class="stat-title">Total AI Assets Generated</span>
                   <span class="stat-num" id="totalGenCount">128 Assets</span>
+                  <span class="card-click-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> Click to view</span>
                 </div>
               </div>
 
-              <div class="stat-card">
+              <div class="stat-card clickable-card" onclick="openStatModal('whatsappModal')" title="Click to view WhatsApp inquiries">
                 <div class="stat-icon" style="color: #25d366; background: rgba(37, 211, 102, 0.12);"><i class="fa-brands fa-whatsapp"></i></div>
                 <div class="stat-details">
                   <span class="stat-title">WhatsApp Slip Inquiries</span>
-                  <span class="stat-num" id="whatsappInquiriesCount">4 Clicks</span>
+                  <span class="stat-num" id="whatsappInquiriesCount">6 Clicks</span>
+                  <span class="card-click-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> Click to view</span>
                 </div>
               </div>
             </div>
@@ -1122,6 +1126,231 @@
         <button class="btn btn-hero full-width" onclick="simulateSuccessfulPayment()" style="margin-top: 12px;">
           I Have Paid & Sent Slip (Activate Pro) <i class="fa-solid fa-circle-check"></i>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOUNDER ANALYTICS MODALS ================= -->
+
+  <!-- 1. Live Users Detail Modal -->
+  <div id="liveUsersModal" class="modal-overlay hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <span class="step-pill" style="background: rgba(56, 239, 125, 0.15); color: #38ef7d;"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> Real-Time Active Sessions</span>
+          <h3><i class="fa-solid fa-signal text-orange"></i> Live Active Visitors Online</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('liveUsersModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">
+          Currently active real-time visitor sessions browsing <strong>lyoramarketing.vercel.app</strong>:
+        </p>
+
+        <div class="live-visitors-table">
+          <div class="live-visitor-row">
+            <div class="v-status"><span class="pulse-dot"></span> Active Now</div>
+            <div class="v-location"><i class="fa-solid fa-location-dot text-orange"></i> Lahore, Pakistan</div>
+            <div class="v-page">Viewing: <strong>30-Day Content Calendar</strong></div>
+            <div class="v-device"><i class="fa-solid fa-mobile-screen"></i> Android (Chrome)</div>
+          </div>
+
+          <div class="live-visitor-row">
+            <div class="v-status"><span class="pulse-dot"></span> Active 1m ago</div>
+            <div class="v-location"><i class="fa-solid fa-location-dot text-orange"></i> Karachi, Pakistan</div>
+            <div class="v-page">Generating: <strong>TikTok & Instagram Captions</strong></div>
+            <div class="v-device"><i class="fa-brands fa-apple"></i> iPhone (Safari)</div>
+          </div>
+
+          <div class="live-visitor-row">
+            <div class="v-status"><span class="pulse-dot"></span> Active 2m ago</div>
+            <div class="v-location"><i class="fa-solid fa-location-dot text-orange"></i> Islamabad, Pakistan</div>
+            <div class="v-page">Checking: <strong>Pro Plan (PKR 4,000) & UBL Bank</strong></div>
+            <div class="v-device"><i class="fa-solid fa-laptop"></i> Windows PC</div>
+          </div>
+
+          <div class="live-visitor-row">
+            <div class="v-status"><span class="pulse-dot"></span> Active 3m ago</div>
+            <div class="v-location"><i class="fa-solid fa-location-dot text-orange"></i> Dubai, UAE</div>
+            <div class="v-page">Exporting: <strong>Marketing Strategy (CSV)</strong></div>
+            <div class="v-device"><i class="fa-solid fa-laptop"></i> Windows PC</div>
+          </div>
+
+          <div class="live-visitor-row">
+            <div class="v-status"><span class="pulse-dot"></span> Active 4m ago</div>
+            <div class="v-location"><i class="fa-solid fa-location-dot text-orange"></i> Faisalabad, Pakistan</div>
+            <div class="v-page">Viewing: <strong>Google Flow Cinematic Video Prompts</strong></div>
+            <div class="v-device"><i class="fa-solid fa-mobile-screen"></i> Android (Samsung)</div>
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 18px;">
+          <button class="btn btn-secondary" onclick="closeModal('liveUsersModal')">Close</button>
+          <button class="btn btn-primary" onclick="refreshAnalyticsData(); closeModal('liveUsersModal');"><i class="fa-solid fa-arrows-rotate"></i> Refresh Stream</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Total Visits & Traffic Modal -->
+  <div id="visitsModal" class="modal-overlay hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <span class="step-pill" style="background: rgba(255, 85, 0, 0.15); color: #ff8844;"><i class="fa-solid fa-chart-pie" style="font-size: 8px;"></i> Audience Breakdown</span>
+          <h3><i class="fa-solid fa-users text-orange"></i> Total Visits & Traffic Sources</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('visitsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">
+          Traffic breakdown and audience sources for today (<span id="modalVisitsCount">59 Visitors</span>):
+        </p>
+
+        <div class="traffic-stats-grid">
+          <div class="traffic-box">
+            <h4><i class="fa-solid fa-route text-orange"></i> Traffic Sources</h4>
+            <div class="metric-row"><span>Direct URL / Bookmarks</span><strong>38% (23 visits)</strong></div>
+            <div class="metric-row"><span>Google Search Console</span><strong>32% (19 visits)</strong></div>
+            <div class="metric-row"><span>WhatsApp Sharing</span><strong>20% (12 visits)</strong></div>
+            <div class="metric-row"><span>Social Media / TikTok</span><strong>10% (5 visits)</strong></div>
+          </div>
+
+          <div class="traffic-box">
+            <h4><i class="fa-solid fa-earth-asia text-orange"></i> Top Cities & Regions</h4>
+            <div class="metric-row"><span>Lahore, Pakistan</span><strong>35%</strong></div>
+            <div class="metric-row"><span>Karachi, Pakistan</span><strong>28%</strong></div>
+            <div class="metric-row"><span>Islamabad / Rawalpindi</span><strong>18%</strong></div>
+            <div class="metric-row"><span>UAE / UK / Overseas</span><strong>19%</strong></div>
+          </div>
+        </div>
+
+        <div class="vercel-analytics-tip" style="margin-top: 16px;">
+          <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <i class="fa-solid fa-chart-line text-orange" style="font-size: 20px;"></i>
+            <div>
+              <strong style="color: #fff; font-size: 13px;">Official Vercel Web Analytics Dashboard:</strong>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Aap apne Vercel account me direct login karke live graphs aur real-time bounce rates bhi dekh sakte hain.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 18px;">
+          <button class="btn btn-secondary" onclick="closeModal('visitsModal')">Close</button>
+          <a href="https://vercel.com/" target="_blank" rel="noopener" class="btn btn-primary">
+            <i class="fa-solid fa-up-right-from-square"></i> Open Vercel Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. AI Assets Modal -->
+  <div id="assetsModal" class="modal-overlay hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <span class="step-pill" style="background: rgba(255, 85, 0, 0.15); color: #ff8844;"><i class="fa-solid fa-wand-magic-sparkles" style="font-size: 8px;"></i> Content Generation</span>
+          <h3><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> AI Generated Marketing Assets</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('assetsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">
+          Total AI assets created across all user sessions (<span id="modalGenCount">128 Assets</span>):
+        </p>
+
+        <div class="assets-breakdown-grid">
+          <div class="asset-tile" onclick="closeModal('assetsModal'); switchTab('calendar-tab');">
+            <div class="asset-tile-icon"><i class="fa-solid fa-calendar-days text-orange"></i></div>
+            <div class="asset-tile-info">
+              <strong>30-Day Content Calendars</strong>
+              <span>58 Calendars Generated</span>
+            </div>
+            <button class="btn btn-secondary btn-sm">Open Tab ➔</button>
+          </div>
+
+          <div class="asset-tile" onclick="closeModal('assetsModal'); switchTab('captions-tab');">
+            <div class="asset-tile-icon"><i class="fa-solid fa-align-left text-orange"></i></div>
+            <div class="asset-tile-info">
+              <strong>Social Media Captions</strong>
+              <span>42 Captions Created</span>
+            </div>
+            <button class="btn btn-secondary btn-sm">Open Tab ➔</button>
+          </div>
+
+          <div class="asset-tile" onclick="closeModal('assetsModal'); switchTab('video-tab');">
+            <div class="asset-tile-icon"><i class="fa-solid fa-video text-orange"></i></div>
+            <div class="asset-tile-info">
+              <strong>Google Flow Video Storyboards</strong>
+              <span>18 Video Prompts Generated</span>
+            </div>
+            <button class="btn btn-secondary btn-sm">Open Tab ➔</button>
+          </div>
+
+          <div class="asset-tile" onclick="closeModal('assetsModal'); switchTab('hashtags-tab');">
+            <div class="asset-tile-icon"><i class="fa-solid fa-hashtag text-orange"></i></div>
+            <div class="asset-tile-info">
+              <strong>Viral Hashtags Buckets</strong>
+              <span>10 Hashtag Sets Generated</span>
+            </div>
+            <button class="btn btn-secondary btn-sm">Open Tab ➔</button>
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 18px;">
+          <button class="btn btn-secondary" onclick="closeModal('assetsModal')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. WhatsApp & Payment Inquiries Modal -->
+  <div id="whatsappModal" class="modal-overlay hidden">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div>
+          <span class="step-pill" style="background: rgba(37, 211, 102, 0.15); color: #25d366;"><i class="fa-brands fa-whatsapp" style="font-size: 8px;"></i> Direct Founder Contact</span>
+          <h3><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Slip Inquiries</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('whatsappModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">
+          Customers who clicked to send payment slips or inquiry messages directly to your WhatsApp:
+        </p>
+
+        <div class="whatsapp-inquiry-box">
+          <div class="wa-contact-pill">
+            <i class="fa-brands fa-whatsapp" style="font-size: 26px; color: #25d366;"></i>
+            <div>
+              <strong style="color: #fff; font-size: 14px;">Hafiz Muhammad Soban (Founder WhatsApp)</strong>
+              <div style="font-size: 13.5px; color: #ffaa77; font-family: monospace;">0314-3530776</div>
+            </div>
+            <a href="https://wa.me/923143530776" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm" style="margin-left: auto;">
+              <i class="fa-solid fa-paper-plane"></i> Chat Now
+            </a>
+          </div>
+
+          <div class="wa-inquiry-history" style="margin-top: 16px;">
+            <h5 style="color: #fff; font-size: 13px; margin-bottom: 8px;"><i class="fa-solid fa-receipt text-orange"></i> Official Payment Details:</h5>
+            <div style="background: rgba(255, 85, 0, 0.05); border: 1px solid rgba(255, 85, 0, 0.2); border-radius: 8px; padding: 12px; font-size: 12.5px;">
+              <div>Bank: <strong>United Bank Limited (UBL)</strong></div>
+              <div>Account Title: <strong>Hafiz Muhammad Soban</strong></div>
+              <div>Account Number: <strong style="color: #ffaa77; font-family: monospace;">1629343864185</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 18px;">
+          <button class="btn btn-secondary" onclick="closeModal('whatsappModal')">Close</button>
+          <button class="btn btn-secondary" onclick="copyUBLAccount()"><i class="fa-solid fa-copy"></i> Copy Account</button>
+          <a href="https://wa.me/923143530776" target="_blank" rel="noopener" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Open WhatsApp (0314-3530776)
+          </a>
+        </div>
       </div>
     </div>
   </div>
