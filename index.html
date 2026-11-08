@@ -1,11 +1,945 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LYORA AI - AI Marketing Automation</title>
+  <meta name="description" content="LYORA AI - Intelligence. Creativity. Growth. All-in-one AI Marketing Automation for business owners.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    
+<body class="dark-theme">
+
+  <!-- Ambient Glow Backdrops (Styled like the uploaded orange-ember visual) -->
+  <div class="glow-orb glow-top-left"></div>
+  <div class="glow-orb glow-bottom-right"></div>
+  <div class="glow-orb glow-center"></div>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="logo-icon">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+          </div>
+          <div class="brand-text">
+            <h2>LYORA <span class="ai-badge">AI</span></h2>
+            <span class="tagline">Intelligence. Creativity. Growth.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand-badge-card">
+        <div class="badge-label"><i class="fa-solid fa-briefcase"></i> Active Brand:</div>
+        <div class="badge-brand-name" id="sidebarBrandName">Not Configured Yet</div>
+        <span class="badge-status" id="sidebarBrandStatus">Step 1 Required</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">CORE WORKFLOW</div>
+        
+        <button class="nav-link active" data-tab="dashboard-tab">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-link" data-tab="business-info-tab">
+          <span class="step-num">1</span>
+          <i class="fa-solid fa-building"></i>
+          <span>Business Info</span>
+        </button>
+
+        <button class="nav-link" data-tab="strategy-tab">
+          <span class="step-num">2</span>
+          <i class="fa-solid fa-chess-knight"></i>
+          <span>AI Strategy</span>
+        </button>
+
+        <button class="nav-link" data-tab="calendar-tab">
+          <span class="step-num">3</span>
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>30-Day Calendar</span>
+        </button>
+
+        <button class="nav-link" data-tab="captions-tab">
+          <span class="step-num">4</span>
+          <i class="fa-solid fa-pen-nib"></i>
+          <span>Social Captions</span>
+        </button>
+
+        <button class="nav-link" data-tab="video-prompts-tab">
+          <span class="step-num">5</span>
+          <i class="fa-solid fa-clapperboard"></i>
+          <span>Google Flow Prompts</span>
+        </button>
+
+        <button class="nav-link" data-tab="hashtags-tab">
+          <span class="step-num">6</span>
+          <i class="fa-solid fa-hashtag"></i>
+          <span>Hashtag Generator</span>
+        </button>
+
+        <button class="nav-link" data-tab="export-tab">
+          <span class="step-num">7</span>
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span>Export & Download</span>
+        </button>
+
+        <div class="nav-section-label">MONETIZATION & SYSTEM</div>
+
+        <button class="nav-link" data-tab="plans-tab">
+          <i class="fa-solid fa-crown text-orange"></i>
+          <span>Plans & Pricing</span>
+          <span class="pill-hot">PRO</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer / Credits -->
+      <div class="sidebar-footer">
+        <div class="credit-box">
+          <div class="credit-header">
+            <span><i class="fa-solid fa-bolt text-orange"></i> Free Credits</span>
+            <span class="credit-val" id="creditCount">5 / 5</span>
+          </div>
+          <div class="credit-bar">
+            <div class="credit-fill" id="creditFill" style="width: 100%;"></div>
+          </div>
+          <button class="btn btn-upgrade-sm" onclick="openCheckout('Pro Growth', 15, 4000)">
+            Upgrade to Pro (PKR 4,000)
+          </button>
+        </div>
+
+        <div class="user-profile-row">
+          <div class="user-avatar" id="userAvatar">L</div>
+          <div class="user-info">
+            <div class="user-name" id="userDisplayName">Guest Marketer</div>
+            <div class="user-email" id="userDisplayEmail">Free Tier Member</div>
+          </div>
+          <button class="btn-icon" onclick="openModal('authModal')" title="Login / Signup">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+      <!-- TOP NAVIGATION BAR -->
+      <header class="topbar">
+        <div class="mobile-menu-toggle" id="mobileMenuBtn">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="topbar-title">
+          <h1 id="pageHeading">LYORA AI Marketing Engine</h1>
+          <p id="pageSubheading">Empower your business with intelligence, creativity, and automated growth.</p>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="openModal('apiKeyModal')">
+            <i class="fa-solid fa-key"></i> <span class="hide-mobile">AI Key Setup</span>
+          </button>
+
+          <button class="btn btn-primary" onclick="quickFillDemoData()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hide-mobile">Load Sample Brand</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- SCREEN WRAPPER -->
+      <div class="content-scroll-container">
+
+        <!-- ================= TAB: DASHBOARD OVERVIEW ================= -->
+        <section id="dashboard-tab" class="tab-panel active">
+          <!-- Hero Orange Banner inspired by the image -->
+          <div class="hero-orange-strip">
+            <div class="strip-content">
+              <span class="strip-tag">STAGE 1 TO 7 ARCHITECTURE</span>
+              <h2>All-In-One AI Marketing Suite for Modern Founders</h2>
+              <p>Ek hi platform se strategy, 30 din ka calendar, captions, Google Flow prompts aur hashtags generate karein.</p>
+            </div>
+            <div class="strip-action">
+              <button class="btn btn-hero" onclick="switchTab('business-info-tab')">
+                START BRAND SETUP <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+              <div class="stat-details">
+                <span class="stat-title">Remaining Credits</span>
+                <span class="stat-num" id="dashCredits">5 Generations</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fa-solid fa-bullseye"></i></div>
+              <div class="stat-details">
+                <span class="stat-title">Active Brand</span>
+                <span class="stat-num" id="dashBrand">LYORA Fashion</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+              <div class="stat-details">
+                <span class="stat-title">Content Calendar</span>
+                <span class="stat-num">30 Days Ready</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fa-solid fa-rocket"></i></div>
+              <div class="stat-details">
+                <span class="stat-title">Platform Engine</span>
+                <span class="stat-num">Gemini AI / Offline Mode</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Cards Grid (Visual Flow) -->
+          <div class="section-title-wrap">
+            <h3 class="section-title">First Version MVP Core Modules</h3>
+            <p class="section-desc">Click any module to execute the automated marketing pipeline.</p>
+          </div>
+
+          <div class="modules-grid">
+            <div class="module-card" onclick="switchTab('business-info-tab')">
+              <div class="module-badge">Feature 1</div>
+              <div class="module-icon"><i class="fa-solid fa-sliders"></i></div>
+              <h4>Business Info Input</h4>
+              <p>Niche, audience, brand voice, core offer aur marketing goals save karein.</p>
+              <span class="card-link">Configure Brand <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+
+            <div class="module-card" onclick="switchTab('strategy-tab')">
+              <div class="module-badge">Feature 2</div>
+              <div class="module-icon"><i class="fa-solid fa-brain"></i></div>
+              <h4>AI Marketing Strategy</h4>
+              <p>Positioning, buyer personas, 3 pillars aur high-converting campaign hooks.</p>
+              <span class="card-link">Build Strategy <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+
+            <div class="module-card" onclick="switchTab('calendar-tab')">
+              <div class="module-badge">Feature 3</div>
+              <div class="module-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <h4>30-Day Content Calendar</h4>
+              <p>Full month day-by-day plan, content pillars, reels, carousels & stories.</p>
+              <span class="card-link">View Calendar <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+
+            <div class="module-card" onclick="switchTab('captions-tab')">
+              <div class="module-badge">Feature 4</div>
+              <div class="module-icon"><i class="fa-solid fa-feather"></i></div>
+              <h4>Social Media Captions</h4>
+              <p>Instagram, LinkedIn, X/Twitter, FB aur TikTok ke high-retention hooks & copy.</p>
+              <span class="card-link">Write Captions <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+
+            <div class="module-card" onclick="switchTab('video-prompts-tab')">
+              <div class="module-badge">Feature 5</div>
+              <div class="module-icon"><i class="fa-solid fa-video"></i></div>
+              <h4>Google Flow Video Prompts</h4>
+              <p>Cinematic AI video prompts, lighting, camera angles aur voiceover scripts.</p>
+              <span class="card-link">Generate Prompts <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+
+            <div class="module-card" onclick="switchTab('hashtags-tab')">
+              <div class="module-badge">Feature 6</div>
+              <div class="module-icon"><i class="fa-solid fa-hashtag"></i></div>
+              <h4>Hashtag Generator</h4>
+              <p>Viral, high-reach, niche aur community hashtags with 1-click copy.</p>
+              <span class="card-link">Generate Tags <i class="fa-solid fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 1: BUSINESS INFORMATION INPUT ================= -->
+        <section id="business-info-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 1 / Feature 1</span>
+                <h3>Business & Brand Profile Setup</h3>
+                <p>Is information ke base par AI aapki poori marketing strategy aur content generate karega.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="quickFillDemoData()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Auto Fill Sample
+              </button>
+            </div>
+
+            <form id="businessInfoForm" onsubmit="saveBusinessInfo(event)">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="brandName"><i class="fa-solid fa-tag text-orange"></i> Brand / Business Name *</label>
+                  <input type="text" id="brandName" placeholder="e.g. LYORA Sneakers or Aura Digital" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="industry"><i class="fa-solid fa-layer-group text-orange"></i> Industry / Niche *</label>
+                  <select id="industry" required>
+                    <option value="" disabled selected>Select Industry</option>
+                    <option value="Fashion & Apparel">Fashion & Apparel</option>
+                    <option value="E-Commerce / D2C">E-Commerce / Direct to Consumer</option>
+                    <option value="SaaS & Technology">SaaS & Technology</option>
+                    <option value="Fitness & Health">Fitness, Gym & Wellness</option>
+                    <option value="Food & Beverages">Restaurant, Food & Cafe</option>
+                    <option value="Real Estate">Real Estate & Construction</option>
+                    <option value="Digital Agency / Freelancer">Digital Agency & Freelancing</option>
+                    <option value="Education & Coaching">Education, EdTech & Coaching</option>
+                    <option value="Beauty & Cosmetics">Beauty, Skincare & Cosmetics</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="productDesc"><i class="fa-solid fa-cube text-orange"></i> Core Product / Service Description *</label>
+                  <textarea id="productDesc" rows="3" placeholder="Aap kya bechte hain? Key features aur main problem jo solve hoti hai." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="targetAudience"><i class="fa-solid fa-users text-orange"></i> Target Audience & Customer Persona *</label>
+                  <input type="text" id="targetAudience" placeholder="e.g. Gen-Z professionals age 20-35, urban fashion lovers" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="brandVoice"><i class="fa-solid fa-microphone-lines text-orange"></i> Brand Voice & Tone *</label>
+                  <select id="brandVoice" required>
+                    <option value="Bold, High-Energy & Premium" selected>Bold, High-Energy & Premium</option>
+                    <option value="Luxury, Minimalist & Sophisticated">Luxury, Minimalist & Sophisticated</option>
+                    <option value="Friendly, Relatable & Witty">Friendly, Relatable & Witty</option>
+                    <option value="Authoritative, Corporate & Analytical">Authoritative, Corporate & Analytical</option>
+                    <option value="Inspirational, Motivational & Transformational">Inspirational, Motivational & Transformational</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="marketingGoal"><i class="fa-solid fa-bullseye text-orange"></i> Primary Marketing Goal *</label>
+                  <select id="marketingGoal" required>
+                    <option value="Fast Sales & Conversions" selected>Fast Sales & Conversions</option>
+                    <option value="Brand Awareness & Organic Reach">Brand Awareness & Organic Reach</option>
+                    <option value="Lead Generation & High-Ticket Inquiries">Lead Generation & High-Ticket Inquiries</option>
+                    <option value="Community Building & Loyal Followers">Community Building & Loyal Followers</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="uniqueSellingProp"><i class="fa-solid fa-gem text-orange"></i> Unique Selling Proposition (USP)</label>
+                  <input type="text" id="uniqueSellingProp" placeholder="e.g. Handcrafted memory foam soles with 100% breathable mesh">
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Brand Profile
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="generateAllPipeline()">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Save & Generate All (Full Auto)
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ================= TAB 2: AI MARKETING STRATEGY ================= -->
+        <section id="strategy-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 2 / Feature 2</span>
+                <h3>AI Marketing Strategy Blueprint</h3>
+                <p>Aapke business ke liye targeted marketing road-map aur revenue angles.</p>
+              </div>
+              <div class="header-btns">
+                <button class="btn btn-secondary btn-sm" onclick="copyContent('strategyOutput')">
+                  <i class="fa-solid fa-copy"></i> Copy
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="triggerStrategyGeneration()">
+                  <i class="fa-solid fa-arrows-rotate"></i> Generate Strategy
+                </button>
+              </div>
+            </div>
+
+            <div id="strategyLoading" class="ai-loader-box hidden">
+              <div class="spinner"></div>
+              <h4>LYORA AI is synthesizing your marketing strategy...</h4>
+              <p>Analyzing market positioning, high-converting channels, and psychological hooks.</p>
+            </div>
+
+            <div id="strategyOutput" class="strategy-output-area">
+              <div class="placeholder-state">
+                <i class="fa-solid fa-chess-queen text-orange big-icon"></i>
+                <h4>Ready to generate your master marketing strategy</h4>
+                <p>Click "Generate Strategy" to build positioning pillars, audience psychology, and growth channels.</p>
+                <button class="btn btn-primary" onclick="triggerStrategyGeneration()">
+                  Generate Strategy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 3: 30-DAY CONTENT CALENDAR ================= -->
+        <section id="calendar-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 3 / Feature 3</span>
+                <h3>30-Day Content Calendar</h3>
+                <p>Full 30 din ka structured marketing calendar with hooks, formats, and pillar tags.</p>
+              </div>
+              <div class="header-btns">
+                <button class="btn btn-secondary btn-sm" onclick="exportCalendarCSV()">
+                  <i class="fa-solid fa-file-csv"></i> Download CSV
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="triggerCalendarGeneration()">
+                  <i class="fa-solid fa-arrows-rotate"></i> Generate Calendar
+                </button>
+              </div>
+            </div>
+
+            <!-- Calendar Filters -->
+            <div class="calendar-filters">
+              <div class="filter-group">
+                <span class="filter-label"><i class="fa-solid fa-filter"></i> Week:</span>
+                <button class="btn-filter active" onclick="filterCalendar('all')">All (30 Days)</button>
+                <button class="btn-filter" onclick="filterCalendar('week1')">Week 1 (Awareness)</button>
+                <button class="btn-filter" onclick="filterCalendar('week2')">Week 2 (Authority)</button>
+                <button class="btn-filter" onclick="filterCalendar('week3')">Week 3 (Conversion)</button>
+                <button class="btn-filter" onclick="filterCalendar('week4')">Week 4 (Loyalty)</button>
+              </div>
+
+              <div class="filter-group">
+                <span class="filter-label">Format:</span>
+                <select id="calendarFormatFilter" onchange="filterCalendarFormat(this.value)">
+                  <option value="all">All Formats</option>
+                  <option value="Reel / Video">Reels / Shorts</option>
+                  <option value="Carousel">Carousels</option>
+                  <option value="Single Image">Single Image</option>
+                  <option value="Story / Poll">Story & Interactive</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="calendarLoading" class="ai-loader-box hidden">
+              <div class="spinner"></div>
+              <h4>Formulating 30-Day Omnichannel Calendar...</h4>
+              <p>Balancing promotional, educational, behind-the-scenes, and authority posts.</p>
+            </div>
+
+            <div id="calendarGrid" class="calendar-grid">
+              <div class="placeholder-state full-width">
+                <i class="fa-solid fa-calendar-days text-orange big-icon"></i>
+                <h4>No calendar generated yet</h4>
+                <p>Generate a complete 30-day viral schedule tailored to your business profile.</p>
+                <button class="btn btn-primary" onclick="triggerCalendarGeneration()">
+                  Generate 30-Day Calendar
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 4: SOCIAL MEDIA CAPTIONS ================= -->
+        <section id="captions-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 4 / Feature 4</span>
+                <h3>Social Media Captions Generator</h3>
+                <p>Platform-specific high-converting copy with scroll-stopping hooks and CTAs.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="triggerCaptionsGeneration()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Captions
+              </button>
+            </div>
+
+            <!-- Platform Switcher Tabs -->
+            <div class="platform-tabs">
+              <button class="plat-tab active" onclick="switchPlatform('instagram')">
+                <i class="fa-brands fa-instagram"></i> Instagram
+              </button>
+              <button class="plat-tab" onclick="switchPlatform('linkedin')">
+                <i class="fa-brands fa-linkedin"></i> LinkedIn
+              </button>
+              <button class="plat-tab" onclick="switchPlatform('twitter')">
+                <i class="fa-brands fa-x-twitter"></i> X (Twitter)
+              </button>
+              <button class="plat-tab" onclick="switchPlatform('facebook')">
+                <i class="fa-brands fa-facebook"></i> Facebook
+              </button>
+              <button class="plat-tab" onclick="switchPlatform('tiktok')">
+                <i class="fa-brands fa-tiktok"></i> TikTok
+              </button>
+            </div>
+
+            <div class="form-row-compact">
+              <div class="form-group flex-2">
+                <label for="captionTopic">Specific Post Topic / Campaign Angle</label>
+                <input type="text" id="captionTopic" placeholder="e.g. Why traditional options fail and how our solution transforms your results">
+              </div>
+              <div class="form-group flex-1">
+                <label for="captionAngle">Post Style / Angle</label>
+                <select id="captionAngle">
+                  <option value="Storytelling & Transformation">Storytelling & Transformation</option>
+                  <option value="Contrarian / Myth Buster">Contrarian / Myth Buster</option>
+                  <option value="Direct Promotional & Discount">Direct Promotional & Discount</option>
+                  <option value="Step-by-Step Educational">Step-by-Step Educational</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="captionsLoading" class="ai-loader-box hidden">
+              <div class="spinner"></div>
+              <h4>Crafting viral hooks and persuasive copy...</h4>
+            </div>
+
+            <div id="captionsOutput" class="captions-container">
+              <div class="placeholder-state">
+                <i class="fa-solid fa-pen-fancy text-orange big-icon"></i>
+                <h4>Ready to generate high-converting captions</h4>
+                <p>Select your platform and click "Generate Captions" to view instant platform-tailored copy.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 5: GOOGLE FLOW VIDEO PROMPTS ================= -->
+        <section id="video-prompts-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 5 / Feature 5</span>
+                <h3>Google Flow & AI Video Prompts</h3>
+                <p>Ultra-realistic visual prompts for Google Flow, Veo, Sora, and Runway Gen-3 with voiceover scripts.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="triggerVideoPromptsGeneration()">
+                <i class="fa-solid fa-film"></i> Generate Video Prompts
+              </button>
+            </div>
+
+            <div class="form-row-compact">
+              <div class="form-group flex-2">
+                <label for="videoStyle">Video Aesthetic & Atmosphere</label>
+                <select id="videoStyle">
+                  <option value="Cinematic Cyber Dark with Neon Orange Accents (Luxury Commercial)">Cinematic Dark with Vibrant Orange Lighting (Brand Visual)</option>
+                  <option value="Hyper-realistic 4K Macro Product Commercial">Hyper-realistic 4K Macro Product Commercial</option>
+                  <option value="Urban Fast-Paced Lifestyle & Movement">Urban Fast-Paced Lifestyle & Movement</option>
+                  <option value="Clean Minimalist High-End Studio Lighting">Clean Minimalist High-End Studio Lighting</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label for="videoDuration">Target Video Length</label>
+                <select id="videoDuration">
+                  <option value="15-Second High-Energy Reel Ad">15-Second High-Energy Reel Ad</option>
+                  <option value="30-Second Product Story / Explainer">30-Second Product Story / Explainer</option>
+                  <option value="60-Second Brand Vision Film">60-Second Brand Vision Film</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="videoLoading" class="ai-loader-box hidden">
+              <div class="spinner"></div>
+              <h4>Directing cinematic scenes and Google Flow prompts...</h4>
+            </div>
+
+            <div id="videoPromptsOutput" class="video-prompts-box">
+              <div class="placeholder-state">
+                <i class="fa-solid fa-video text-orange big-icon"></i>
+                <h4>No video prompts generated yet</h4>
+                <p>Generate professional AI video generator prompts ready to paste directly into Google Veo / Flow / Runway.</p>
+                <button class="btn btn-primary" onclick="triggerVideoPromptsGeneration()">
+                  Generate Video Prompts
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 6: HASHTAG GENERATOR ================= -->
+        <section id="hashtags-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 6 / Feature 6</span>
+                <h3>AI Hashtag Engine</h3>
+                <p>High-reach, targeted niche, and low-competition community tags to maximize algorithm discovery.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="triggerHashtagGeneration()">
+                <i class="fa-solid fa-hashtag"></i> Generate Hashtags
+              </button>
+            </div>
+
+            <div class="form-row-compact">
+              <div class="form-group flex-2">
+                <label for="hashtagKeyword">Main Keyword or Campaign Focus</label>
+                <input type="text" id="hashtagKeyword" placeholder="e.g. Luxury Sneakers, AI Marketing, Vegan Skincare">
+              </div>
+              <div class="form-group flex-1">
+                <label for="hashtagPlatform">Primary Platform Target</label>
+                <select id="hashtagPlatform">
+                  <option value="Instagram">Instagram Reels & Posts</option>
+                  <option value="TikTok">TikTok Trending</option>
+                  <option value="LinkedIn">LinkedIn Professional</option>
+                  <option value="X/Twitter">X (Twitter) Trending</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="hashtagLoading" class="ai-loader-box hidden">
+              <div class="spinner"></div>
+              <h4>Analyzing social reach & trending tags...</h4>
+            </div>
+
+            <div id="hashtagOutput" class="hashtags-result-container">
+              <div class="placeholder-state">
+                <i class="fa-solid fa-tags text-orange big-icon"></i>
+                <h4>Ready to generate targeted hashtags</h4>
+                <p>Categorized in 3 strategic tiers: Mega Reach, Niche Authority, and Community Discovery.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 7: EXPORT & DOWNLOADS ================= -->
+        <section id="export-tab" class="tab-panel">
+          <div class="card glass-card">
+            <div class="card-header">
+              <div>
+                <span class="step-pill">Stage 7 / Feature 7</span>
+                <h3>Copy & Download Center</h3>
+                <p>Aapke saare generated marketing assets ko 1-click me copy ya download karein.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="exportFullBundleJSON()">
+                <i class="fa-solid fa-box-archive"></i> Download Full JSON Bundle
+              </button>
+            </div>
+
+            <div class="export-cards-grid">
+              <div class="export-card">
+                <div class="export-icon"><i class="fa-solid fa-chess-knight"></i></div>
+                <div class="export-body">
+                  <h4>Marketing Strategy Report</h4>
+                  <p>Comprehensive strategy document formatted in markdown & text.</p>
+                </div>
+                <div class="export-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="copyContent('strategyOutput')"><i class="fa-solid fa-copy"></i> Copy</button>
+                  <button class="btn btn-primary btn-sm" onclick="downloadStrategyFile()"><i class="fa-solid fa-download"></i> Save .MD</button>
+                </div>
+              </div>
+
+              <div class="export-card">
+                <div class="export-icon"><i class="fa-solid fa-table-cells"></i></div>
+                <div class="export-body">
+                  <h4>30-Day Content Calendar (.CSV)</h4>
+                  <p>Excel aur Google Sheets me direct import karne ke liye complete spreadsheet.</p>
+                </div>
+                <div class="export-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="copyCalendarText()"><i class="fa-solid fa-copy"></i> Copy List</button>
+                  <button class="btn btn-primary btn-sm" onclick="exportCalendarCSV()"><i class="fa-solid fa-file-csv"></i> Save .CSV</button>
+                </div>
+              </div>
+
+              <div class="export-card">
+                <div class="export-icon"><i class="fa-solid fa-clapperboard"></i></div>
+                <div class="export-body">
+                  <h4>Google Flow Video Prompts</h4>
+                  <p>AI video generator prompts, cinematic direction and voiceover scripts.</p>
+                </div>
+                <div class="export-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="copyVideoPrompts()"><i class="fa-solid fa-copy"></i> Copy Prompts</button>
+                  <button class="btn btn-primary btn-sm" onclick="downloadVideoPromptsFile()"><i class="fa-solid fa-download"></i> Save .TXT</button>
+                </div>
+              </div>
+
+              <div class="export-card">
+                <div class="export-icon"><i class="fa-solid fa-hashtag"></i></div>
+                <div class="export-body">
+                  <h4>Categorized Hashtag Bank</h4>
+                  <p>Pre-grouped tags sorted by volume for quick caption pasting.</p>
+                </div>
+                <div class="export-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="copyAllHashtags()"><i class="fa-solid fa-copy"></i> Copy All</button>
+                  <button class="btn btn-primary btn-sm" onclick="downloadHashtagsFile()"><i class="fa-solid fa-download"></i> Save .TXT</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: PLANS & PRICING ================= -->
+        <section id="plans-tab" class="tab-panel">
+          <!-- Pricing Header -->
+          <div class="pricing-banner">
+            <span class="strip-tag">EARNING MODEL & MONETIZATION</span>
+            <h2>Choose Your LYORA AI Growth Plan</h2>
+            <p>Predictable monthly SaaS recurring revenue for business owners, creators & marketing agencies.</p>
+          </div>
+
+          <div class="pricing-grid">
+            <!-- Free Tier -->
+            <div class="price-card">
+              <div class="tier-name">Free Starter</div>
+              <div class="tier-tagline">Test the power of AI marketing</div>
+              <div class="tier-price">
+                <span class="currency">$</span>0 <span class="period">/ forever</span>
+              </div>
+              <div class="tier-pkr">PKR 0 / month</div>
+              <ul class="tier-features">
+                <li><i class="fa-solid fa-check text-orange"></i> 1 Active Brand Profile</li>
+                <li><i class="fa-solid fa-check text-orange"></i> 5 Free AI Generations</li>
+                <li><i class="fa-solid fa-check text-orange"></i> 7-Day Sample Content Calendar</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Standard Social Captions</li>
+                <li class="disabled"><i class="fa-solid fa-xmark"></i> Google Flow Video Prompts</li>
+                <li class="disabled"><i class="fa-solid fa-xmark"></i> Export to CSV / Markdown</li>
+              </ul>
+              <button class="btn btn-secondary full-width" onclick="selectTier('free')">
+                Current Plan
+              </button>
+            </div>
+
+            <!-- Pro Plan (Popular Glowing Card) -->
+            <div class="price-card popular-card">
+              <div class="popular-badge">LAUNCH OFFER - 50% OFF</div>
+              <div class="tier-name">LYORA Pro Growth</div>
+              <div class="tier-tagline">Ideal for growing businesses, shops & founders</div>
+              <div class="tier-price">
+                <span class="currency">PKR</span> 4,000 <span class="period">/ month</span>
+              </div>
+              <div class="tier-pkr">
+                <span style="text-decoration: line-through; opacity: 0.55; margin-right: 6px;">PKR 8,000</span>
+                <span style="background: rgba(255,85,0,0.2); padding: 2px 7px; border-radius: 4px; color: #ffaa77; font-weight: 700;">Early Bird (~$15)</span>
+              </div>
+              <ul class="tier-features">
+                <li><i class="fa-solid fa-check text-orange"></i> <strong>Unlimited</strong> AI Generations</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Full 30-Day Content Calendar</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Google Flow & Veo Video Prompts</li>
+                <li><i class="fa-solid fa-check text-orange"></i> 5 Brand Profiles Saved</li>
+                <li><i class="fa-solid fa-check text-orange"></i> CSV & Markdown One-Click Export</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Direct UBL & WhatsApp Slip Activation</li>
+              </ul>
+              <button class="btn btn-hero full-width" onclick="openCheckout('Pro Growth', 15, 4000)">
+                Upgrade to Pro (PKR 4,000) <i class="fa-solid fa-bolt"></i>
+              </button>
+            </div>
+
+            <!-- Agency Plan -->
+            <div class="price-card">
+              <div class="tier-name">Agency Scale</div>
+              <div class="tier-tagline">For digital agencies & marketing teams</div>
+              <div class="tier-price">
+                <span class="currency">PKR</span> 12,000 <span class="period">/ month</span>
+              </div>
+              <div class="tier-pkr">
+                <span style="text-decoration: line-through; opacity: 0.55; margin-right: 6px;">PKR 24,000</span>
+                <span style="background: rgba(255,85,0,0.2); padding: 2px 7px; border-radius: 4px; color: #ffaa77; font-weight: 700;">Agency Deal (~$45)</span>
+              </div>
+              <ul class="tier-features">
+                <li><i class="fa-solid fa-check text-orange"></i> Everything in Pro Plan</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Unlimited Brand Profiles</li>
+                <li><i class="fa-solid fa-check text-orange"></i> White-Label Client Reports</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Dedicated Gemini 1.5 Pro AI Slot</li>
+                <li><i class="fa-solid fa-check text-orange"></i> Team Collaboration (5 Seats)</li>
+                <li><i class="fa-solid fa-check text-orange"></i> 24/7 Priority WhatsApp Support</li>
+              </ul>
+              <button class="btn btn-secondary full-width" onclick="openCheckout('Agency Scale', 45, 12000)">
+                Get Agency Access (PKR 12,000)
+              </button>
+            </div>
+          </div>
+
+          <!-- Official Payment Gateway Info Banner -->
+          <div class="card glass-card" style="max-width: 1050px; margin: 30px auto 0; padding: 20px 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 85, 0, 0.12); border: 1px solid var(--orange-border); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary-orange);">
+                  <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                  <h4 style="color: #fff; font-size: 15px; margin-bottom: 2px;">Official Payment Method: UBL Bank Transfer</h4>
+                  <p style="color: var(--text-muted); font-size: 12.5px;">Account Title: <strong style="color: #fff;">Hafiz Muhammad Soban</strong> | Account: <strong style="color: #ffaa77; font-family: monospace;">1629343864185</strong></p>
+                </div>
+              </div>
+
+              <a href="https://wa.me/923143530776?text=Assalam-o-Alaikum!%20Maine%20LYORA%20AI%20ke%20hawale%20se%20rabta%20kiya%20hai." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Support: 0314-3530776
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- API Key Modal -->
+  <div id="apiKeyModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-key text-orange"></i> Google Gemini AI Key Setup</h3>
+        <button class="modal-close" onclick="closeModal('apiKeyModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">
+          LYORA AI me <strong>Google Gemini API</strong> integrate kiya gaya hai. Aap apna free Google AI Studio key daal sakte hain, ya bina key ke <strong>Smart Offline Mode</strong> use kar sakte hain!
+        </p>
+
+        <div class="form-group">
+          <label for="geminiApiKey">Your Gemini API Key</label>
+          <input type="password" id="geminiApiKey" placeholder="AIzaSy...">
+        </div>
+
+        <div class="key-help-box">
+          <i class="fa-solid fa-circle-info text-orange"></i>
+          <div>
+            <strong>Free API key kaise lein?</strong><br>
+            1. Visit <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (Click here)</a><br>
+            2. "Get API Key" button par click karein aur yahan paste karein.
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="clearApiKey()">Remove Key</button>
+          <button class="btn btn-primary" onclick="saveApiKey()">Save API Key</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Sign up / Login) -->
+  <div id="authModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="authModalTitle"><i class="fa-solid fa-user-shield text-orange"></i> Sign In to LYORA AI</h3>
+        <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="authTabLogin" onclick="setAuthMode('login')">Sign In</button>
+          <button class="auth-tab-btn" id="authTabSignup" onclick="setAuthMode('signup')">Create Account</button>
+        </div>
+
+        <form id="authForm" onsubmit="handleAuthSubmit(event)">
+          <div class="form-group" id="nameFieldGroup" style="display: none;">
+            <label for="authName">Full Name</label>
+            <input type="text" id="authName" placeholder="e.g. Hamza Khan">
+          </div>
+
+          <div class="form-group">
+            <label for="authEmail">Email Address</label>
+            <input type="email" id="authEmail" placeholder="your@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="authPassword">Password</label>
+            <input type="password" id="authPassword" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn btn-hero full-width" id="authSubmitBtn">
+            Sign In to Dashboard
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing / Checkout Modal (UBL Bank + WhatsApp Slip Verification) -->
+  <div id="pricingModal" class="modal-overlay hidden">
+    <div class="modal-card modal-ubl">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-building-columns text-orange"></i> Upgrade to <span id="checkoutPlanTitle">Pro Growth</span></h3>
+        <button class="modal-close" onclick="closeModal('pricingModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="checkout-summary">
+          <div class="checkout-row">
+            <span>Selected Plan:</span>
+            <strong id="checkoutPlanName">LYORA Pro Growth</strong>
+          </div>
+          <div class="checkout-row">
+            <span>Payable Amount:</span>
+            <strong class="text-orange" id="checkoutPlanPrice">PKR 4,000 / month ($15)</strong>
+          </div>
+        </div>
+
+        <!-- Official UBL Bank Account Box -->
+        <div class="ubl-payment-box">
+          <div class="ubl-box-header">
+            <div class="ubl-badge">
+              <i class="fa-solid fa-building-columns"></i> UNITED BANK LIMITED (UBL)
+            </div>
+            <span class="ubl-verified-badge"><i class="fa-solid fa-shield-halved"></i> Verified</span>
+          </div>
+
+          <div class="ubl-info-grid">
+            <div class="ubl-row">
+              <span class="ubl-label">Bank Name:</span>
+              <strong class="ubl-value">UBL Bank (United Bank Limited)</strong>
+            </div>
+
+            <div class="ubl-row">
+              <span class="ubl-label">Account Title:</span>
+              <strong class="ubl-value ubl-name-highlight">Hafiz Muhammad Soban</strong>
+            </div>
+
+            <div class="ubl-row ubl-account-row">
+              <div class="account-left">
+                <span class="ubl-label">Account Number:</span>
+                <span class="ubl-digits" id="ublAccountNum">1629343864185</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="copyUBLAccount()" title="Copy Account Number">
+                <i class="fa-solid fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+          <p class="ubl-transfer-hint">
+            <i class="fa-solid fa-circle-info text-orange"></i> Aap kisi bhi bank app (UBL, HBL, Meezan, Sadapay, Nayapay waghaira) se is account me transfer kar sakte hain.
+          </p>
+        </div>
+
+        <!-- WhatsApp Payment Slip Verification -->
+        <div class="whatsapp-slip-box">
+          <div class="wa-box-header">
+            <div class="wa-icon-circle">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <h4 class="wa-title">Send Payment Slip on WhatsApp</h4>
+              <p class="wa-sub">Payment transfer karne ke baad screenshot is number par send karein:</p>
+            </div>
+          </div>
+
+          <div class="wa-number-display">
+            <i class="fa-solid fa-mobile-screen"></i> WhatsApp: <strong>03143530776</strong>
+          </div>
+
+          <a id="whatsappPayLink" href="https://wa.me/923143530776?text=Assalam-o-Alaikum!%20Maine%20LYORA%20AI%20Pro%20Plan%20ki%20payment%20UBL%20account%20me%20send%20kar%20di%20hai.%0A%0AAccount%20Title:%20Hafiz%20Muhammad%20Soban%0AAccount%20No:%201629343864185%0A%0AYeh%20meri%20payment%20slip%20hai:" target="_blank" rel="noopener" class="btn btn-whatsapp full-width">
+            <i class="fa-brands fa-whatsapp"></i> Send Payment Slip (0314-3530776)
+          </a>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label for="senderTrxId">Sender Name / Trx ID (Optional)</label>
+          <input type="text" id="senderTrxId" placeholder="e.g. Ali Khan / Trx ID #123456">
+        </div>
+
+        <button class="btn btn-hero full-width" onclick="simulateSuccessfulPayment()" style="margin-top: 12px;">
+          I Have Paid & Sent Slip (Activate Pro) <i class="fa-solid fa-circle-check"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>
