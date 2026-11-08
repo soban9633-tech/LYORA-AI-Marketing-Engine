@@ -601,20 +601,36 @@
 
             <div class="form-row-compact">
               <div class="form-group flex-2">
-                <label for="videoStyle">Video Aesthetic & Atmosphere</label>
+                <label for="videoStyle"><i class="fa-solid fa-palette text-orange"></i> Video Aesthetic & Atmosphere</label>
                 <select id="videoStyle">
                   <option value="Cinematic Cyber Dark with Neon Orange Accents (Luxury Commercial)">Cinematic Dark with Vibrant Orange Lighting (Brand Visual)</option>
                   <option value="Hyper-realistic 4K Macro Product Commercial">Hyper-realistic 4K Macro Product Commercial</option>
                   <option value="Urban Fast-Paced Lifestyle & Movement">Urban Fast-Paced Lifestyle & Movement</option>
                   <option value="Clean Minimalist High-End Studio Lighting">Clean Minimalist High-End Studio Lighting</option>
+                  <option value="Viral TikTok / Reel UGC Creator Style">Viral TikTok / Reel UGC Creator Style</option>
                 </select>
               </div>
               <div class="form-group flex-1">
-                <label for="videoDuration">Target Video Length</label>
+                <label for="videoDuration"><i class="fa-solid fa-clock text-orange"></i> Target Video Length</label>
                 <select id="videoDuration">
                   <option value="15-Second High-Energy Reel Ad">15-Second High-Energy Reel Ad</option>
                   <option value="30-Second Product Story / Explainer">30-Second Product Story / Explainer</option>
                   <option value="60-Second Brand Vision Film">60-Second Brand Vision Film</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label for="videoLanguage"><i class="fa-solid fa-language text-orange"></i> Voiceover Language (زبان)</label>
+                <select id="videoLanguage">
+                  <option value="roman-urdu" selected>🇵🇰 Roman Urdu (Asaan Roman)</option>
+                  <option value="urdu">🇵🇰 Urdu (اردو)</option>
+                  <option value="hindi">🇮🇳 Hindi (हिन्दी)</option>
+                  <option value="roman-hindi">🇮🇳 Roman Hindi / Hinglish</option>
+                  <option value="english">🇬🇧 English (Global)</option>
+                  <option value="arabic">🇸🇦 Arabic (العربية)</option>
+                  <option value="spanish">🇪🇸 Spanish (Español)</option>
+                  <option value="french">🇫🇷 French (Français)</option>
+                  <option value="german">🇩🇪 German (Deutsch)</option>
+                  <option value="turkish">🇹🇷 Turkish (Türkçe)</option>
                 </select>
               </div>
             </div>
@@ -959,6 +975,69 @@
                         Aap apne Vercel dashboard me <strong>"Analytics"</strong> par click karke exact countries (Pakistan, Dubai, US), cities, aur real visitor graphs bhi dekh sakte hain!
                       </p>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================= LIVE SEARCH & CREATION RADAR (LOG KYA SEARCH & BNA RAHE HAIN) ================= -->
+            <div class="creator-radar-section" style="margin-top: 26px;">
+              <div class="radar-header">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                  <div>
+                    <h4 style="font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;">
+                      <i class="fa-solid fa-radar text-orange" style="font-size: 20px;"></i>
+                      Live Search & Content Creation Radar
+                    </h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 3px;">
+                      Real-time insight: Dekhein log kya brand/product search & input kar rahe hain aur AI se kya kya bana rahe hain.
+                    </p>
+                  </div>
+
+                  <!-- Quick Switch Tabs: All, Searches, Creations -->
+                  <div class="radar-filters">
+                    <button class="radar-tab-btn active" id="radarTabAll" onclick="filterRadar('all')">
+                      <i class="fa-solid fa-layer-group"></i> All Radar Stream (<span id="radarAllCount">14</span>)
+                    </button>
+                    <button class="radar-tab-btn" id="radarTabSearch" onclick="filterRadar('search')">
+                      <i class="fa-solid fa-magnifying-glass text-orange"></i> Log Kya Search Kar Rahe Hain (<span id="radarSearchCount">6</span>)
+                    </button>
+                    <button class="radar-tab-btn" id="radarTabCreation" onclick="filterRadar('creation')">
+                      <i class="fa-solid fa-wand-magic-sparkles" style="color: #38ef7d;"></i> Log Kya Bna Rahe Hain (<span id="radarCreationCount">8</span>)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Radar Dual Column Grid -->
+              <div class="radar-dual-grid" id="radarDualGrid">
+                <!-- Column 1: Searches & Input Queries -->
+                <div class="radar-box" id="radarSearchesBox">
+                  <div class="radar-box-header">
+                    <h5>
+                      <i class="fa-solid fa-magnifying-glass text-orange"></i>
+                      Recent Searches & Brand Inputs
+                    </h5>
+                    <span class="live-dot-pulse"></span>
+                  </div>
+                  <p class="radar-sub">Visitors ne form me kaunsi brands, products aur marketing goals enter kiye:</p>
+                  <div class="radar-list" id="searchesRadarList">
+                    <!-- Injected via JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Column 2: What People Created (Actual Generated Output Snippets) -->
+                <div class="radar-box" id="radarCreationsBox">
+                  <div class="radar-box-header">
+                    <h5>
+                      <i class="fa-solid fa-wand-magic-sparkles" style="color: #38ef7d;"></i>
+                      Live Creations (What Visitors Created)
+                    </h5>
+                    <span class="live-dot-pulse"></span>
+                  </div>
+                  <p class="radar-sub">Visitors ne AI se kaunsa content, calendar ya reel scripts generate karwayi:</p>
+                  <div class="radar-list" id="creationsRadarList">
+                    <!-- Injected via JavaScript -->
                   </div>
                 </div>
               </div>

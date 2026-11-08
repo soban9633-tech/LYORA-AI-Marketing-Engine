@@ -176,8 +176,9 @@ function switchTab(tabId) {
   }
 
   // Refresh analytics live stream when tab is opened
-  if (tabId === 'analytics-tab' && typeof renderActivityFeed === 'function') {
-    renderActivityFeed();
+  if (tabId === 'analytics-tab') {
+    if (typeof renderActivityFeed === 'function') renderActivityFeed();
+    if (typeof renderRadarLists === 'function') renderRadarLists();
   }
 
   // Close mobile sidebar if open
@@ -320,6 +321,16 @@ function saveBusinessInfo(e) {
   saveState();
   updateUI();
   showToast('Brand Profile saved successfully!', 'success');
+
+  if (LYORA_STATE.brand.brandName && typeof logSearchRadar === 'function') {
+    logSearchRadar(
+      LYORA_STATE.brand.brandName,
+      LYORA_STATE.brand.industry || 'Ecommerce & Retail',
+      LYORA_STATE.brand.marketingGoal || 'Brand Growth',
+      LYORA_STATE.brand.productDesc || 'Marketing strategy and automation'
+    );
+  }
+
   switchTab('strategy-tab');
 }
 
@@ -460,6 +471,10 @@ USP: ${b.uniqueSellingProp}`;
   if (typeof logActivityEvent === 'function') {
     logActivityEvent('Generated AI Marketing Strategy', `${b.brandName || 'Brand'} • 4-Pillar Blueprint Created`, 'Strategy', 'fa-brain');
   }
+
+  if (typeof logCreationRadar === 'function') {
+    logCreationRadar('Omnichannel Marketing Strategy', b.brandName, '4-Pillar Growth Blueprint', `Targeting ${b.targetAudience || 'Core Audience'} • Goal: ${b.marketingGoal || 'Sales'}`);
+  }
 }
 
 // ================= FEATURE 3: 30-DAY CONTENT CALENDAR =================
@@ -521,6 +536,10 @@ async function triggerCalendarGeneration() {
 
   if (typeof logActivityEvent === 'function') {
     logActivityEvent('Generated 30-Day Content Calendar', `${b.brandName || 'Brand'} • 30 Daily Posts`, 'Calendar', 'fa-calendar-days');
+  }
+
+  if (typeof logCreationRadar === 'function') {
+    logCreationRadar('30-Day Content Calendar', b.brandName, '30 Daily High-Converting Posts', `Full 4-week calendar generated with format tags, teaser hooks, and CTAs`);
   }
 }
 
@@ -646,6 +665,11 @@ async function triggerCaptionsGeneration() {
   if (typeof logActivityEvent === 'function') {
     logActivityEvent('Generated Multi-Platform Captions', 'Instagram, TikTok, LinkedIn, X, FB', 'Captions', 'fa-align-left');
   }
+
+  if (typeof logCreationRadar === 'function') {
+    const hookSnippet = LYORA_STATE.captions && LYORA_STATE.captions.instagram ? LYORA_STATE.captions.instagram.hook : 'Viral post captions created';
+    logCreationRadar('Multi-Platform Social Captions', b.brandName, '5 Platforms (Insta, TikTok, LinkedIn, X, FB)', hookSnippet);
+  }
 }
 
 function switchPlatform(platformKey) {
@@ -701,6 +725,99 @@ function copyCaptionText() {
 }
 
 // ================= FEATURE 5: GOOGLE FLOW VIDEO PROMPTS =================
+const MULTILINGUAL_VOICEOVER_ENGINE = {
+  'roman-urdu': {
+    label: '🇵🇰 Roman Urdu',
+    name: 'Roman Urdu',
+    getScenes: (b) => [
+      `Jab aam standards kafi nahi hotay, tab humne perfection ka naya standard set kiya.`,
+      `Khaas un logon ke liye jo relentless quality, modern style aur ${b.uniqueSellingProp || 'zabardast comfort'} demand karte hain.`,
+      `${b.brandName} — Apne lifestyle ko upgrade karein. Bio me diye gaye link se abhi order karein!`
+    ]
+  },
+  'urdu': {
+    label: '🇵🇰 اردو (Urdu)',
+    name: 'Urdu',
+    getScenes: (b) => [
+      `جب عام معیار کافی نہ رہے، تب ہم نے ایک نیا معیار تخلیق کیا۔`,
+      `خاص ان لوگوں کے لیے تیار کردہ جو بے مثال کوالٹی اور ${b.uniqueSellingProp || 'شاندار معیار'} کے طلب گار ہیں۔`,
+      `${b.brandName} — اپنے انداز کو ایک نئی پہچان دیں۔ ابھی بائیو میں دیے گئے لنک سے آرڈر کریں۔`
+    ]
+  },
+  'hindi': {
+    label: '🇮🇳 हिन्दी (Hindi)',
+    name: 'Hindi',
+    getScenes: (b) => [
+      `जब साधारण चीज़ें काफी नहीं होतीं, तब हमने एक नया स्टैंडर्ड बनाया।`,
+      `खास उनके लिए तैयार किया गया जो बेहतरीन क्वालिटी और ${b.uniqueSellingProp || 'अनोखे कम्फर्ट'} की तलाश में हैं।`,
+      `${b.brandName} — अपने स्टाइल को एक नया मुकाम दें। अभी बायो में दिए लिंक से ऑर्डर करें!`
+    ]
+  },
+  'roman-hindi': {
+    label: '🇮🇳 Hinglish',
+    name: 'Roman Hindi / Hinglish',
+    getScenes: (b) => [
+      `Jab ordinary products kaafi nahi hote, tab humne redefine kiya quality standard.`,
+      `Specially crafted unke liye jo chahte hain unbeatable durability aur ${b.uniqueSellingProp || 'ultimate modern style'}.`,
+      `${b.brandName} — Aaj hi explore karein. Link in bio to grab your exclusive drop now!`
+    ]
+  },
+  'english': {
+    label: '🇬🇧 English',
+    name: 'English (Global)',
+    getScenes: (b) => [
+      `When ordinary isn't enough, we re-engineered the standard from the ground up.`,
+      `Crafted for visionaries who demand relentless performance, timeless design, and ${b.uniqueSellingProp || 'uncompromised craftsmanship'}.`,
+      `LYORA presents ${b.brandName}. Intelligence. Creativity. Growth. Shop the exclusive drop today.`
+    ]
+  },
+  'arabic': {
+    label: '🇸🇦 العربية',
+    name: 'Arabic',
+    getScenes: (b) => [
+      `عندما لا تكون المعايير العادية كافية، نعيد هندسة التميز من البداية.`,
+      `صُمم خصيصاً لأولئك الذين يطلبون أعلى درجات الجودة والفخامة و${b.uniqueSellingProp || 'الراحة الفائقة'}.`,
+      `${b.brandName} — ارتقِ بأسلوب حياتك الآن. اطلب عبر الرابط في البايو اليوم!`
+    ]
+  },
+  'spanish': {
+    label: '🇪🇸 Español',
+    name: 'Spanish',
+    getScenes: (b) => [
+      `Cuando lo ordinario no es suficiente, reinventamos los estándares desde cero.`,
+      `Diseñado para quienes exigen rendimiento implacable, diseño atemporal y ${b.uniqueSellingProp || 'excelencia sin límites'}.`,
+      `${b.brandName} — Redefine tu estilo hoy mismo. ¡Haz clic en el enlace para ordenar!`
+    ]
+  },
+  'french': {
+    label: '🇫🇷 Français',
+    name: 'French',
+    getScenes: (b) => [
+      `Quand l'ordinaire ne suffit plus, nous réinventons l'excellence et la précision.`,
+      `Conçu pour ceux qui exigent une performance irréprochable et ${b.uniqueSellingProp || 'un savoir-faire unique'}.`,
+      `${b.brandName} — Redéfinissez votre distinction. Commandez via le lien en bio dès aujourd'hui.`
+    ]
+  },
+  'german': {
+    label: '🇩🇪 Deutsch',
+    name: 'German',
+    getScenes: (b) => [
+      `Wenn das Gewöhnliche nicht ausreicht, setzen wir völlig neue Maßstäbe.`,
+      `Entwickelt für höchste Ansprüche an Zuverlässigkeit, zeitloses Design und ${b.uniqueSellingProp || 'überlegene Qualität'}.`,
+      `${b.brandName} — Erleben Sie den spürbaren Unterschied. Jetzt online sichern!`
+    ]
+  },
+  'turkish': {
+    label: '🇹🇷 Türkçe',
+    name: 'Turkish',
+    getScenes: (b) => [
+      `Sıradan olan yetmediğinde, mükemmellik standartlarını baştan yazdık.`,
+      `En yüksek kalite, benzersiz konfor ve ${b.uniqueSellingProp || 'çağdaş tasarım'} arayanlar için özel üretildi.`,
+      `${b.brandName} — Tarzınızı zirveye taşıyın. Bio'daki linke tıklayarak hemen sipariş verin!`
+    ]
+  }
+};
+
 async function triggerVideoPromptsGeneration() {
   if (!LYORA_STATE.brand.brandName) {
     showToast('Brand setup pehle karein!', 'warning');
@@ -720,57 +837,113 @@ async function triggerVideoPromptsGeneration() {
   const b = LYORA_STATE.brand;
   const style = document.getElementById('videoStyle').value;
   const duration = document.getElementById('videoDuration').value;
+  const lang = document.getElementById('videoLanguage') ? document.getElementById('videoLanguage').value : 'roman-urdu';
 
   const mainPrompt = `Cinematic commercial shot for ${b.brandName} in ${b.industry}. Photorealistic 8K, moody obsidian background with vibrant ember-orange anamorphic lens flare and laser backlight. Dynamic macro camera orbit around the product showcasing ${b.uniqueSellingProp || 'meticulous textures and craftsmanship'}. High-energy atmospheric smoke, cinematic motion blur, premium commercial aesthetic, shot on ARRI Alexa 35, 60fps slow-motion.`;
+
+  const langConfig = MULTILINGUAL_VOICEOVER_ENGINE[lang] || MULTILINGUAL_VOICEOVER_ENGINE['roman-urdu'];
+  const voices = langConfig.getScenes(b);
 
   LYORA_STATE.videoPromptData = {
     style: style,
     duration: duration,
+    selectedLanguage: lang,
     mainPrompt: mainPrompt,
     scenes: [
-      { time: '0:00 - 0:04', visual: `Rapid dynamic dolly-in on ${b.brandName} silhouette. Dark glossy obsidian floor reflecting neon orange volumetric beams.`, voice: `When ordinary isn't enough, we re-engineered the standard.` },
-      { time: '0:04 - 0:09', visual: `Extreme macro 100mm lens revealing pristine textures, stitches, and ${b.uniqueSellingProp || 'comfort technology'}. Subtle orange ember particles drift across the frame.`, voice: `Crafted for leaders who demand relentless performance and timeless style.` },
-      { time: '0:09 - 0:15', visual: `Fast-paced urban transit shot. Talent stepping forward with explosive confidence. Logo lockup with glowing orange ember ignite effect.`, voice: `LYORA AI presents ${b.brandName}. Intelligence. Creativity. Growth.` }
+      { time: '0:00 - 0:04', visual: `Rapid dynamic dolly-in on ${b.brandName} silhouette. Dark glossy obsidian floor reflecting neon orange volumetric beams.`, voice: voices[0] },
+      { time: '0:04 - 0:09', visual: `Extreme macro 100mm lens revealing pristine textures, stitches, and ${b.uniqueSellingProp || 'comfort technology'}. Subtle orange ember particles drift across the frame.`, voice: voices[1] },
+      { time: '0:09 - 0:15', visual: `Fast-paced urban transit shot. Talent stepping forward with explosive confidence. Logo lockup with glowing orange ember ignite effect.`, voice: voices[2] }
     ]
   };
+
+  renderVideoStoryboard();
+  showToast(`Google Flow prompts generated in ${langConfig.name}!`, 'success');
+
+  if (typeof logActivityEvent === 'function') {
+    logActivityEvent(`Generated Video Storyboard (${langConfig.name})`, 'Google Flow & Veo Prompts', 'Video', 'fa-video');
+  }
+
+  if (typeof logCreationRadar === 'function') {
+    const videoSnippet = LYORA_STATE.videoPromptData ? LYORA_STATE.videoPromptData.mainPrompt.slice(0, 110) + '...' : 'Cinematic video prompt';
+    logCreationRadar(`Google Flow Video (${langConfig.name})`, LYORA_STATE.brand.brandName, 'Cinematic AI Storyboard', videoSnippet);
+  }
+}
+
+function renderVideoStoryboard() {
+  const output = document.getElementById('videoPromptsOutput');
+  if (!output || !LYORA_STATE.videoPromptData) return;
+
+  const d = LYORA_STATE.videoPromptData;
+  const currentLang = d.selectedLanguage || 'roman-urdu';
+  const langConfig = MULTILINGUAL_VOICEOVER_ENGINE[currentLang] || MULTILINGUAL_VOICEOVER_ENGINE['roman-urdu'];
 
   output.innerHTML = `
     <div class="video-prompt-card">
       <div class="video-prompt-header">
-        <h4><i class="fa-solid fa-clapperboard text-orange"></i> Google Flow & Veo Ready AI Prompt</h4>
+        <div>
+          <h4><i class="fa-solid fa-clapperboard text-orange"></i> Google Flow, Veo & Sora Ready AI Prompt</h4>
+          <span style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 3px;">
+            <i class="fa-solid fa-language text-orange"></i> Active Voiceover: <strong>${langConfig.name}</strong> • ${d.style}
+          </span>
+        </div>
         <button class="btn btn-secondary btn-sm" onclick="copyVideoPromptOnly()">
           <i class="fa-solid fa-copy"></i> Copy Flow Prompt
         </button>
       </div>
+
       <div class="prompt-copy-block">
-        <div class="prompt-text">${mainPrompt}</div>
+        <div class="prompt-text">${d.mainPrompt}</div>
       </div>
 
-      <h5 style="color: #fff; margin-top: 16px; margin-bottom: 8px;"><i class="fa-solid fa-list-ol text-orange"></i> Shot-By-Shot Storyboard & Timeline (${duration})</h5>
+      <!-- Quick Multi-Lingual Voiceover Switcher Pills -->
+      <div class="lang-pills-bar">
+        <span class="lang-pills-label"><i class="fa-solid fa-language text-orange"></i> Switch Voiceover (زبان بدلیں):</span>
+        ${Object.keys(MULTILINGUAL_VOICEOVER_ENGINE).map(key => `
+          <button class="lang-pill-btn ${key === currentLang ? 'active' : ''}" onclick="switchVideoVoiceLanguage('${key}')">
+            ${MULTILINGUAL_VOICEOVER_ENGINE[key].label}
+          </button>
+        `).join('')}
+      </div>
+
+      <h5 style="color: #fff; margin-top: 16px; margin-bottom: 8px;">
+        <i class="fa-solid fa-list-ol text-orange"></i> Shot-By-Shot Storyboard & Timeline (${d.duration})
+      </h5>
+
       <div class="scene-timeline">
-        ${LYORA_STATE.videoPromptData.scenes.map(s => `
+        ${d.scenes.map(s => `
           <div class="scene-row">
             <span class="scene-time">${s.time}</span>
             <div>
               <strong>Visual:</strong> ${s.visual}<br>
-              <em style="color: #ffaa77;"><i class="fa-solid fa-microphone"></i> Audio/Voiceover: "${s.voice}"</em>
+              <em style="color: #ffaa77;"><i class="fa-solid fa-microphone"></i> Audio/Voiceover (${langConfig.name}): "${s.voice}"</em>
             </div>
           </div>
         `).join('')}
       </div>
 
       <div class="voiceover-box">
-        <strong><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> Prompting Tips for Google Flow & Sora:</strong>
-        Paste the prompt directly into Google Veo / Flow or Runway Gen-3. Keep the aspect ratio at 9:16 for Reels/TikTok or 16:9 for YouTube/Web.
+        <strong><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> Multi-Lingual Video Generation Tips:</strong>
+        Copy the visual prompt directly into Google Veo, Flow, or Runway Gen-3. Then use the translated voiceover script with AI voice generators (ElevenLabs, Murf AI, or CapCut) in your chosen language (${langConfig.name})!
       </div>
     </div>
   `;
+}
 
-  showToast('Google Flow video prompts generated!', 'success');
+function switchVideoVoiceLanguage(langKey) {
+  if (!LYORA_STATE.videoPromptData) return;
+  const langConfig = MULTILINGUAL_VOICEOVER_ENGINE[langKey];
+  if (!langConfig) return;
 
-  if (typeof logActivityEvent === 'function') {
-    logActivityEvent('Generated Cinematic Video Storyboard', 'Google Flow & Sora Prompts', 'Video', 'fa-video');
-  }
+  LYORA_STATE.videoPromptData.selectedLanguage = langKey;
+  const b = LYORA_STATE.brand;
+  const voices = langConfig.getScenes(b);
+
+  LYORA_STATE.videoPromptData.scenes.forEach((scene, idx) => {
+    if (voices[idx]) scene.voice = voices[idx];
+  });
+
+  renderVideoStoryboard();
+  showToast(`Voiceover language switched to ${langConfig.name}!`, 'success');
 }
 
 function copyVideoPromptOnly() {
@@ -865,6 +1038,10 @@ async function triggerHashtagGeneration() {
 
   if (typeof logActivityEvent === 'function') {
     logActivityEvent('Generated Viral Hashtags', 'Tiered Reach, Niche & Community Tags', 'Hashtags', 'fa-hashtag');
+  }
+
+  if (typeof logCreationRadar === 'function') {
+    logCreationRadar('Viral Hashtags Stack', LYORA_STATE.brand.brandName, 'Categorized Discovery Buckets', 'Mega Reach, Niche Authority, and Community discovery hashtags');
   }
 }
 
@@ -1172,6 +1349,7 @@ function initAnalyticsTracker() {
   }
 
   renderActivityFeed();
+  initRadarTracker();
   startLiveVisitorSimulation();
 }
 
@@ -1243,6 +1421,7 @@ function renderActivityFeed() {
 
 function refreshAnalyticsData() {
   renderActivityFeed();
+  renderRadarLists();
   showToast('Live Analytics refreshed with latest traffic stream!', 'info');
 }
 
@@ -1257,4 +1436,174 @@ function startLiveVisitorSimulation() {
   };
   updateCount();
   setInterval(updateCount, 15000);
+}
+
+// ================= LIVE SEARCH & CONTENT CREATION RADAR =================
+const DEFAULT_SEARCHES = [
+  { brand: "Urban Edge Outfitters", industry: "Fashion & Streetwear", goal: "Boost Online Orders", location: "Lahore, Pakistan", snippet: "Oversized graphic hoodies and cargo pants for Gen-Z youth.", time: "1m ago" },
+  { brand: "DermaPure Botanicals", industry: "Health & Beauty", goal: "Lead Generation", location: "Karachi, Pakistan", snippet: "Natural chemical-free serums and organic skin barrier repair oils.", time: "4m ago" },
+  { brand: "The Chai Story Cafe", industry: "Food & Beverage", goal: "Footfall & Brand Awareness", location: "Islamabad, Pakistan", snippet: "Artisan karak chai and midnight gourmet bun kabab hangout spot.", time: "9m ago" },
+  { brand: "Skyline Grand Residencies", industry: "Real Estate & Construction", goal: "High-Ticket Client Acquisition", location: "Dubai / Overseas", snippet: "Luxury 2-bedroom investment apartments with 8% guaranteed ROI.", time: "18m ago" },
+  { brand: "LeatherCraft Rawalpindi", industry: "Ecommerce & Leather Goods", goal: "Festive Discount Campaign", location: "Rawalpindi, Pakistan", snippet: "Hand-stitched genuine leather wallets and laptop messenger bags.", time: "27m ago" },
+  { brand: "PixelScale Digital Agency", industry: "Digital Marketing & Tech", goal: "Retainer Client Acquisition", location: "Faisalabad, Pakistan", snippet: "Performance marketing and ROAS-focused Meta ads for DTC brands.", time: "45m ago" }
+];
+
+const DEFAULT_CREATIONS = [
+  { type: "30-Day Content Calendar", brand: "Urban Edge Outfitters", title: "30 Daily Reel & Carousel Posts", snippet: "Day 3 (Behind-the-scenes): How our heavyweight 400GSM cotton is knitted in Faisalabad mills.", location: "Lahore, PK", time: "Just now" },
+  { type: "Google Veo / Sora Video Storyboard", brand: "The Chai Story Cafe", title: "Cinematic Slow-Motion Food Reel", snippet: "Visual: Steam rising in golden light as rich saffron chai is poured from copper kettle. Voiceover: 'Sukoon ki talash yahan khatam hoti hai.'", location: "Islamabad, PK", time: "3m ago" },
+  { type: "Multi-Platform Social Captions", brand: "DermaPure Botanicals", title: "Instagram & TikTok Viral Hook", snippet: "Hook: 'Agar aapka skin barrier damage ho chuka hai, to yeh 2 galtiyan foran rok dein...' CTA: 'Tap link in bio for free skin test!'", location: "Karachi, PK", time: "6m ago" },
+  { type: "Omnichannel Strategy Blueprint", brand: "Skyline Grand Residencies", title: "High-Net-Worth Lead Funnel", snippet: "Pillar A: Construction progress transparency. Pillar B: Investor case studies. WhatsApp nurturing automation sequence.", location: "Dubai, UAE", time: "15m ago" },
+  { type: "Viral Hashtags Stack", brand: "LeatherCraft Rawalpindi", title: "Mega & Niche Reach Buckets", snippet: "#pakistanleather #handmadebags #lahoreshopping #rawalpindifashion #pakistanidocuments", location: "Rawalpindi, PK", time: "22m ago" },
+  { type: "30-Day Content Calendar", brand: "PixelScale Digital", title: "B2B LinkedIn & X Calendar", snippet: "Day 12: How we scaled a local apparel brand from 2 ROAS to 5.4 ROAS without burning ad spend.", location: "Faisalabad, PK", time: "38m ago" },
+  { type: "Social Media Captions", brand: "Bling & Sparkle Jewelry", title: "Festive Wedding Season Hooks", snippet: "Hook: 'Bridal look complete nahi hoti bina statement chokar ke.' Body: Handcrafted zircon sets with lifetime polish guarantee.", location: "Lahore, PK", time: "52m ago" },
+  { type: "Google Flow Video Prompts", brand: "FitFuel Nutrition", title: "High-Energy Gym Pre-Workout Reel", snippet: "Visual: Macro close-up of water splash hitting energizing citrus powder. High-tempo EDM sync cuts.", location: "Karachi, PK", time: "1h ago" }
+];
+
+function initRadarTracker() {
+  if (!localStorage.getItem('lyora_searches_radar')) {
+    localStorage.setItem('lyora_searches_radar', JSON.stringify(DEFAULT_SEARCHES));
+  }
+  if (!localStorage.getItem('lyora_creations_radar')) {
+    localStorage.setItem('lyora_creations_radar', JSON.stringify(DEFAULT_CREATIONS));
+  }
+  renderRadarLists();
+}
+
+function logSearchRadar(brandName, industry, goal, querySnippet) {
+  if (!brandName) return;
+  let searches = [];
+  try {
+    searches = JSON.parse(localStorage.getItem('lyora_searches_radar')) || DEFAULT_SEARCHES;
+  } catch(e) {
+    searches = DEFAULT_SEARCHES;
+  }
+
+  searches.unshift({
+    brand: brandName,
+    industry: industry || 'Ecommerce',
+    goal: goal || 'Growth',
+    location: 'Active Visitor',
+    snippet: querySnippet ? (querySnippet.slice(0, 100) + (querySnippet.length > 100 ? '...' : '')) : 'Custom marketing blueprint search',
+    time: 'Just now'
+  });
+
+  if (searches.length > 20) searches = searches.slice(0, 20);
+  localStorage.setItem('lyora_searches_radar', JSON.stringify(searches));
+  renderRadarLists();
+}
+
+function logCreationRadar(type, brandName, title, snippet) {
+  let creations = [];
+  try {
+    creations = JSON.parse(localStorage.getItem('lyora_creations_radar')) || DEFAULT_CREATIONS;
+  } catch(e) {
+    creations = DEFAULT_CREATIONS;
+  }
+
+  creations.unshift({
+    type: type || 'AI Asset',
+    brand: brandName || (LYORA_STATE.brand ? LYORA_STATE.brand.brandName : 'Brand'),
+    title: title || 'Marketing Content',
+    snippet: snippet ? (snippet.slice(0, 120) + (snippet.length > 120 ? '...' : '')) : 'AI Marketing Generation',
+    location: 'Active Visitor',
+    time: 'Just now'
+  });
+
+  if (creations.length > 20) creations = creations.slice(0, 20);
+  localStorage.setItem('lyora_creations_radar', JSON.stringify(creations));
+  renderRadarLists();
+}
+
+function renderRadarLists() {
+  const searchesEl = document.getElementById('searchesRadarList');
+  const creationsEl = document.getElementById('creationsRadarList');
+  const allCountEl = document.getElementById('radarAllCount');
+  const searchCountEl = document.getElementById('radarSearchCount');
+  const creationCountEl = document.getElementById('radarCreationCount');
+
+  let searches = [];
+  let creations = [];
+  try {
+    searches = JSON.parse(localStorage.getItem('lyora_searches_radar')) || DEFAULT_SEARCHES;
+  } catch(e) {
+    searches = DEFAULT_SEARCHES;
+  }
+  try {
+    creations = JSON.parse(localStorage.getItem('lyora_creations_radar')) || DEFAULT_CREATIONS;
+  } catch(e) {
+    creations = DEFAULT_CREATIONS;
+  }
+
+  if (searchCountEl) searchCountEl.textContent = searches.length;
+  if (creationCountEl) creationCountEl.textContent = creations.length;
+  if (allCountEl) allCountEl.textContent = searches.length + creations.length;
+
+  if (searchesEl) {
+    searchesEl.innerHTML = searches.map(item => `
+      <div class="radar-item">
+        <div class="radar-item-top">
+          <div class="radar-item-title">
+            <i class="fa-solid fa-store text-orange"></i>
+            ${item.brand}
+          </div>
+          <span class="radar-item-time">${item.time}</span>
+        </div>
+        <div class="radar-badges">
+          <span class="radar-tag orange"><i class="fa-solid fa-briefcase"></i> ${item.industry}</span>
+          <span class="radar-tag blue"><i class="fa-solid fa-bullseye"></i> ${item.goal}</span>
+          <span class="radar-tag"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
+        </div>
+        <div class="radar-snippet">"${item.snippet}"</div>
+      </div>
+    `).join('');
+  }
+
+  if (creationsEl) {
+    creationsEl.innerHTML = creations.map(item => `
+      <div class="radar-item">
+        <div class="radar-item-top">
+          <div class="radar-item-title">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color: #38ef7d;"></i>
+            ${item.brand}
+          </div>
+          <span class="radar-item-time">${item.time}</span>
+        </div>
+        <div class="radar-badges">
+          <span class="radar-tag green"><i class="fa-solid fa-bolt"></i> ${item.type}</span>
+          <span class="radar-tag"><i class="fa-solid fa-tag"></i> ${item.title}</span>
+          <span class="radar-tag"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
+        </div>
+        <div class="radar-snippet">"${item.snippet}"</div>
+      </div>
+    `).join('');
+  }
+}
+
+function filterRadar(filterType) {
+  const btnAll = document.getElementById('radarTabAll');
+  const btnSearch = document.getElementById('radarTabSearch');
+  const btnCreation = document.getElementById('radarTabCreation');
+  const searchesBox = document.getElementById('radarSearchesBox');
+  const creationsBox = document.getElementById('radarCreationsBox');
+  const dualGrid = document.getElementById('radarDualGrid');
+
+  if (btnAll) btnAll.classList.toggle('active', filterType === 'all');
+  if (btnSearch) btnSearch.classList.toggle('active', filterType === 'search');
+  if (btnCreation) btnCreation.classList.toggle('active', filterType === 'creation');
+
+  if (!searchesBox || !creationsBox || !dualGrid) return;
+
+  if (filterType === 'all') {
+    searchesBox.style.display = 'flex';
+    creationsBox.style.display = 'flex';
+    dualGrid.style.gridTemplateColumns = window.innerWidth <= 900 ? '1fr' : '1fr 1fr';
+  } else if (filterType === 'search') {
+    searchesBox.style.display = 'flex';
+    creationsBox.style.display = 'none';
+    dualGrid.style.gridTemplateColumns = '1fr';
+  } else if (filterType === 'creation') {
+    searchesBox.style.display = 'none';
+    creationsBox.style.display = 'flex';
+    dualGrid.style.gridTemplateColumns = '1fr';
+  }
 }
