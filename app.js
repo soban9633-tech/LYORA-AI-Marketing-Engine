@@ -782,7 +782,6 @@ function copyVideoPromptOnly() {
     logActivityEvent('Copied AI Video Prompt', 'Ready for Veo / Sora', 'Video', 'fa-copy');
   }
 }
-}
 
 function copyVideoPrompts() {
   if (!LYORA_STATE.videoPromptData) return;
